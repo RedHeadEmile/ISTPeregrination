@@ -4,7 +4,7 @@ use JetBrains\PhpStorm\NoReturn;
 
 function currentTimeInMillis(): int
 {
-    return round(microtime(true) * 1000);
+    return intval(round(microtime(true) * 1000));
 }
 
 /**

@@ -29,7 +29,7 @@ class MobilityReviewService implements IMobilityReviewService
     public function submitMobilityReview(MobilityReviewModel $model): void
     {
         $stmt = DatabaseService::getInstance()->getPDO()->prepare(
-            "INSERT INTO `mobilityreview` (reviwed, firstname, lastname, sector, mobilityyear, allowcontact, 
+            "INSERT INTO `mobilityreview` (reviewd, firstname, lastname, sector, mobilityyear, allowcontact, 
                               email, linkedin, countrycode, city, hostorganization, ismobilityprofessional, 
                               contractstatuswhilemobility, contractstatusdetailswhilemobility, mobilityperiod, 
                               hadbreaks, breaksdetails, neededvisa, visadetails, visadelaysforasking, visatips, 
@@ -96,7 +96,7 @@ class MobilityReviewService implements IMobilityReviewService
 
     public function approveMobilityReview(int $reviewId): void
     {
-        $stmt = DatabaseService::getInstance()->getPDO()->prepare("UPDATE `mobilityreview` SET `reviwed` = 1 WHERE `idmobilityreviewid` = ?");
+        $stmt = DatabaseService::getInstance()->getPDO()->prepare("UPDATE `mobilityreview` SET `reviewd` = 1 WHERE `idmobilityreviewid` = ?");
         $stmt->execute([$reviewId]);
     }
 

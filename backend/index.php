@@ -10,6 +10,9 @@ use FastRoute\Dispatcher;
 use FastRoute\RouteCollector;
 use ISTPeregrination\Controllers\ErrorHandlerController;
 use ISTPeregrination\Controllers\MigrationController;
+use ISTPeregrination\Controllers\MobilityReviews\MobilityReviewsApproveController;
+use ISTPeregrination\Controllers\MobilityReviews\MobilityReviewsController;
+use ISTPeregrination\Controllers\MobilityReviews\MobilityReviewsIndexController;
 use ISTPeregrination\Controllers\User\CurrentUserController;
 use ISTPeregrination\Controllers\User\CurrentUserLoginController;
 use ISTPeregrination\Controllers\User\UserRegisterController;
@@ -34,8 +37,8 @@ $dispatcher = simpleDispatcher(function (RouteCollector $r) {
     $r->addRoute(['POST'], "/register", UserRegisterController::class);
 
     $r->addRoute(['GET', 'POST'], '/mobility-reviews', MobilityReviewsIndexController::class);
-    $r->addRoute(['DELETE'], '/mobility-reviews/{id:\d+}', MibilityReviewsController::class);
-    $r->addRoute(['POST'], '/mobility-reviews/{id:\d+}/approve', MibilityReviewsApproveController::class);
+    $r->addRoute(['DELETE'], '/mobility-reviews/{id:\d+}', MobilityReviewsController::class);
+    $r->addRoute(['POST'], '/mobility-reviews/{id:\d+}/approve', MobilityReviewsApproveController::class);
 
     $r->addRoute(['GET'], '/migration', MigrationController::class);
 });
