@@ -1,0 +1,24 @@
+{
+  "name": "bde-istp/istperegrination",
+  "type": "project",
+  "authors": [
+    {
+      "email": "hello@emilien-girolet.fr",
+      "name": "Emilien Girolet"
+    }
+  ],
+  "require": {
+    "phpmailer/phpmailer": "^7.0.2",
+    "nikic/fast-route": "^1.3",
+    "ext-pdo": "*",
+    "ext-mbstring": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "ISTPeregrination\\": "."
+    },
+    "files": [
+      "./Common/functions.php"
+    ]
+  }
+}

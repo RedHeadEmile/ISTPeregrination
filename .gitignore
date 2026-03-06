@@ -1,0 +1,4 @@
+backend/composer.phar
+backend/vendor/
+.env
+.idea
