@@ -1,1 +1,32 @@
-/* You can add global styles to this file, and also import other style files */
+@import "styles/flex.less";
+@import "styles/override.less";
+@import "styles/roboto.less";
+@import "styles/sizing.less";
+@import "styles/spacing.less";
+@import "styles/text.less";
+
+@import "primeicons/primeicons.css";
+@import "svgmap/style";
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+* {
+  font-family: "Roboto", sans-serif;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+.overflow-auto {
+  overflow: auto;
+}

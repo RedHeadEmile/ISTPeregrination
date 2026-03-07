@@ -19,5 +19,6 @@ class MobilityReviewsApproveController extends AbstractController
         $mobilityId = verify_number($mobilityId);
 
         MobilityReviewService::getInstance()->approveMobilityReview($mobilityId);
+        http_response_code(204);
     }
 }

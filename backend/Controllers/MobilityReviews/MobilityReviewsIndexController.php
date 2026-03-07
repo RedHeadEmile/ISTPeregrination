@@ -75,6 +75,13 @@ class MobilityReviewsIndexController extends AbstractController
         $review->whatWouldYouChange = verify_text($whatWouldYouChange, 0, 1000000);
         $review->adviceForFutureMobilityStudents = verify_text($adviceForFutureMobilityStudents, 0, 1000000);
 
+        if (!array_key_exists($review->countryCode, getCountryNameByCode())) {
+            http_response_code(400);
+            echo json_encode(['error' => 'Invalid country code']);
+            return;
+        }
+
         MobilityReviewService::getInstance()->submitMobilityReview($review);
+        http_response_code(201);
     }
 }

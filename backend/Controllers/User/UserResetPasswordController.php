@@ -18,6 +18,7 @@ class UserResetPasswordController extends AbstractController
         list($token, $password) = json_body(['token', 'password']);
         try {
             UserService::getInstance()->resetPassword($token, $password);
+            http_response_code(204);
         }
         catch (PasswordTooWeakException) {
             http_response_code(400);

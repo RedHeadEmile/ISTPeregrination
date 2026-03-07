@@ -22,5 +22,6 @@ class CurrentUserController extends AbstractController
     {
         $this->requireAuth();
         UserService::getInstance()->logout();
+        http_response_code(204);
     }
 }

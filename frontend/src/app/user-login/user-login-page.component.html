@@ -1,0 +1,16 @@
+<form ngForm #form="ngForm" (ngSubmit)="login()" class="flex-column gap-3">
+  <div class="flex-column gap-2">
+    <label for="email">Adresse email</label>
+    <input #emailInput="ngModel" pInputText type="email" [(ngModel)]="email" email name="email" required id="email" [invalid]="emailInput.invalid" [fluid]="true" />
+  </div>
+  <div class="flex-column gap-2">
+    <label for="password">Mot de passe</label>
+    <p-password #passwordInput="ngModel" [(ngModel)]="password" name="password" required id="password" [feedback]="false" [toggleMask]="true" [invalid]="passwordInput.invalid" [minlength]="8" [fluid]="true"></p-password>
+  </div>
+  <div class="flex-row">
+    <button [disabled]="form.invalid || loading" pButton type="submit" [fluid]="true">Connexion</button>
+  </div>
+  @if (!!errorMessage) {
+    <span class="error-message">{{ errorMessage }}</span>
+  }
+</form>

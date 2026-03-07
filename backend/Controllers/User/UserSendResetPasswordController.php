@@ -16,5 +16,6 @@ class UserSendResetPasswordController extends AbstractController
     {
         list($email) = json_body(['email']);
         UserService::getInstance()->sendResetPassword($email);
+        http_response_code(204);
     }
 }

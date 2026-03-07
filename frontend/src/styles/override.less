@@ -1,0 +1,69 @@
+p-stepper,
+p-step-panels,
+p-step-panel,
+p-step-panel > div {
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+p-step-panel[data-p-active=true] {
+  height: 100%;
+  min-height: 0;
+
+  & > div, & > div > * {
+    height: 100%;
+    min-height: 0;
+  }
+
+  & p-motion {
+    height: 100%;
+    min-height: 0;
+
+    & > div, & > div > * {
+      height: 100%;
+      min-height: 0;
+    }
+  }
+}
+
+p-step-panels {
+  flex: 1;
+}
+
+.table-grow .p-datatable-table-container {
+  height: 100%;
+}
+
+.tab-overriden {
+  .p-tablist-content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .p-tablist-tab-list {
+    height: 100%;
+  }
+
+  p-tabpanels {
+    height: 100%;
+    min-height: 0;
+  }
+
+  p-tabpanel.p-tabpanel-active {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    height: 100%;
+  }
+}
+
+.svgMap-container,
+.svgMap-container > div,
+.svgMap-container > div > div {
+  height: 100%;
+}
+
+.svgMap-map-wrapper {
+  padding-top: 0 !important;
+}

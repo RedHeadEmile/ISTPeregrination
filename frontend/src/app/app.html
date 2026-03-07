@@ -1,0 +1,20 @@
+<div class="header">
+  <a [routerLink]="'/'"><img src="ISTP_logo_transparent.png" alt="ISTP Logo" /></a>
+  <span class="title">ISTPeregrination</span>
+  <span>(aucune affiliation direct avec l'ISTP)</span>
+  <div class="flex-grow flex-row justify-end gap-2">
+    <a [routerLink]="'/submit-mobility-review'">
+      <p-button>
+        Ajouter ma mobilité
+      </p-button>
+    </a>
+    @if (isAuthenticated) {
+      <p-menu #menu [model]="menuItems" [popup]="true" [appendTo]="'body'" />
+      <p-button (click)="menu.toggle($event)" icon="pi pi-ellipsis-v" aria-label="Menu" />
+    }
+  </div>
+</div>
+<div class="content">
+  <router-outlet />
+</div>
+<p-toast />

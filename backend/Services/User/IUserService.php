@@ -43,6 +43,13 @@ interface IUserService
     function sendResetPassword(string $email): void;
 
     /**
+     * Check if the provided password reset token is valid.
+     * @param string $token The reset password token.
+     * @return bool Returns true if the token is valid and can be used to reset the password, or false if the token is invalid, expired, or does not exist.
+     */
+    function isResetPasswordTokenValid(string $token): bool;
+
+    /**
      * Resets the user's password using the provided token and new password. The method will verify the token's validity, ensure it matches the user who requested the reset, and then securely update the user's password in the database.
      * @param string $token The unique token that was generated and sent to the user's email as part of the password reset process. This token is used to verify the legitimacy of the password reset request and to identify the user who is attempting to reset their password.
      * @param string $newPassword The new password that the user wants to set, which will be securely hashed before being stored in the database.

@@ -17,6 +17,7 @@ use ISTPeregrination\Controllers\User\CurrentUserController;
 use ISTPeregrination\Controllers\User\CurrentUserLoginController;
 use ISTPeregrination\Controllers\User\UserRegisterController;
 use ISTPeregrination\Controllers\User\UserResetPasswordController;
+use ISTPeregrination\Controllers\User\UserResetPasswordTokenController;
 use ISTPeregrination\Controllers\User\UsersController;
 use ISTPeregrination\Controllers\User\UserSendResetPasswordController;
 use ISTPeregrination\Exceptions\NotFoundException;
@@ -28,13 +29,27 @@ session_start();
 define('__PROJECT_ROOT__', __DIR__);
 define('__BASE_URL__', '');
 
+header('Access-Control-Allow-Origin: ' . $_ENV['allowed_origin']);
+header('Access-Control-Allow-Methods: GET, POST, DELETE, OPTIONS');
+header('Access-Control-Allow-Credentials: true');
+
+set_exception_handler(function (\Throwable $ex): void
+{
+    if ($_ENV['production'] === 'true') {
+        http_response_code(500);
+        die();
+    }
+    else
+        internal_error($ex->__toString());
+});
+
 $dispatcher = simpleDispatcher(function (RouteCollector $r) {
     $r->addRoute(['GET', 'DELETE'], "/current-user", CurrentUserController::class);
     $r->addRoute(['POST'], "/send-reset-password", UserSendResetPasswordController::class);
     $r->addRoute(['POST'], "/reset-password", UserResetPasswordController::class);
-    $r->addRoute(['GET'], "/users", UsersController::class);
+    $r->addRoute(['GET'], "/reset-password-token/{token}", UserResetPasswordTokenController::class);
+    $r->addRoute(['GET', 'POST'], "/users", UsersController::class);
     $r->addRoute(['POST'], "/login", CurrentUserLoginController::class);
-    $r->addRoute(['POST'], "/register", UserRegisterController::class);
 
     $r->addRoute(['GET', 'POST'], '/mobility-reviews', MobilityReviewsIndexController::class);
     $r->addRoute(['DELETE'], '/mobility-reviews/{id:\d+}', MobilityReviewsController::class);

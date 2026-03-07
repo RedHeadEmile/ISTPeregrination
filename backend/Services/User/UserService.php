@@ -5,7 +5,6 @@ namespace ISTPeregrination\Services\User;
 use ISTPeregrination\Common\SingletonTrait;
 use ISTPeregrination\Exceptions\EmailAlreadyExistingException;
 use ISTPeregrination\Exceptions\InvalidEmailException;
-use ISTPeregrination\Exceptions\NotFoundException;
 use ISTPeregrination\Exceptions\PasswordTooWeakException;
 use ISTPeregrination\Services\Database\DatabaseService;
 use ISTPeregrination\Services\Email\EmailService;
@@ -139,18 +138,35 @@ class UserService implements IUserService
         );
     }
 
-    public function resetPassword(string $token, string $newPassword): void
+    private function fetchUserByPasswordResetToken(string $token): ?UserModel
     {
         $stmt = DatabaseService::getInstance()->getPDO()->prepare("SELECT * FROM user WHERE passwordrecoverytoken = ?");
         $stmt->execute([$token]);
         $result = $stmt->fetchAll(\PDO::FETCH_NAMED);
         if (count($result) === 0)
-            return;
+            return null;
 
         if (count($result) > 1)
             throw new \RuntimeException("Multiple users with the same password recovery token found in database, this should not happen");
 
-        $user = UserModel::fromDatabaseRecord($result[0]);
+        return UserModel::fromDatabaseRecord($result[0]);
+    }
+
+    public function isResetPasswordTokenValid(string $token): bool
+    {
+        $user = $this->fetchUserByPasswordResetToken($token);
+        if ($user === null)
+            return false;
+
+        return $user->passwordRecoveryExpire !== null && currentTimeInMillis() < $user->passwordRecoveryExpire;
+    }
+
+    public function resetPassword(string $token, string $newPassword): void
+    {
+        $user = $this->fetchUserByPasswordResetToken($token);
+        if ($user === null)
+            return;
+
         if ($user->passwordRecoveryExpire === null || currentTimeInMillis() > $user->passwordRecoveryExpire)
             throw new \RuntimeException("Password reset token has expired");
 

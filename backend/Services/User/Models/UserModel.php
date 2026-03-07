@@ -35,13 +35,13 @@ class UserModel
 
     public static function fromDatabaseRecord(mixed $record): UserModel {
         return new UserModel(
-            $record['id'],
+            $record['userid'],
             $record['firstname'],
             $record['lastname'],
             $record['email'],
-            $record['hashed_password'],
-            $record['password_recovery_token'] ?? null,
-            $record['password_recovery_expire'] ?? null
+            $record['hashedpassword'],
+            $record['passwordrecoverytoken'] ?? null,
+            $record['passwordrecoveryexpire'] ?? null
         );
     }
 }

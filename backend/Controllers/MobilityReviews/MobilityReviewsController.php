@@ -19,5 +19,6 @@ class MobilityReviewsController extends AbstractController
         $mobilityId = verify_number($mobilityId);
 
         MobilityReviewService::getInstance()->deleteMobilityReview($mobilityId);
+        http_response_code(204);
     }
 }

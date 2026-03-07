@@ -49,20 +49,6 @@ abstract class AbstractController
     }
 
     /**
-     * Get the content of the body as json
-     * @return mixed The content of the body
-     */
-    final protected function getJsonBody(): mixed
-    {
-        $payload = json_decode($this->getStringBody(), true);
-        if ($payload === null) {
-            http_response_code(400);
-            die();
-        }
-        return $payload;
-    }
-
-    /**
      * Send a json response with the given data and http status code
      * @param mixed $data The data to send as json
      * @param int $statusCode The http status code to send (default: 200)

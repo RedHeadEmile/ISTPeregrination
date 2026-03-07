@@ -1,0 +1,44 @@
+@space-step: 0.25rem;
+@space-max: 16;
+
+// Recursive generator
+.generate-spacing(@i) when (@i >= 0) {
+  @v: (@i * @space-step);
+
+  // --- gap ---
+  .gap-@{i} { gap: @v; }
+  .gap-x-@{i} { column-gap: @v; }
+  .gap-y-@{i} { row-gap: @v; }
+
+  // --- margin (positive) ---
+  .m-@{i}  { margin: @v; }
+  .mt-@{i} { margin-top: @v; }
+  .mr-@{i} { margin-right: @v; }
+  .mb-@{i} { margin-bottom: @v; }
+  .ml-@{i} { margin-left: @v; }
+  .mx-@{i} { margin-left: @v; margin-right: @v; }
+  .my-@{i} { margin-top: @v; margin-bottom: @v; }
+
+  // --- padding ---
+  .p-@{i}  { padding: @v; }
+  .pt-@{i} { padding-top: @v; }
+  .pr-@{i} { padding-right: @v; }
+  .pb-@{i} { padding-bottom: @v; }
+  .pl-@{i} { padding-left: @v; }
+  .px-@{i} { padding-left: @v; padding-right: @v; }
+  .py-@{i} { padding-top: @v; padding-bottom: @v; }
+
+  // --- margin (negative) — not generated for 0 ---
+  .-m-@{i}  when (@i > 0) { margin: -@v; }
+  .-mt-@{i} when (@i > 0) { margin-top: -@v; }
+  .-mr-@{i} when (@i > 0) { margin-right: -@v; }
+  .-mb-@{i} when (@i > 0) { margin-bottom: -@v; }
+  .-ml-@{i} when (@i > 0) { margin-left: -@v; }
+  .-mx-@{i} when (@i > 0) { margin-left: -@v; margin-right: -@v; }
+  .-my-@{i} when (@i > 0) { margin-top: -@v; margin-bottom: -@v; }
+
+  .generate-spacing(@i - 1);
+}
+.generate-spacing(@_) when (default()) {}
+
+.generate-spacing(@space-max);
