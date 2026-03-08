@@ -1,7 +1,17 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {UserModel} from '../models/user.model';
 import {MobilityReviewModel} from '../models/mobility-review.model';
 import {environment} from '../../../environments/environment';
+
+export class ApiError extends Error {
+  readonly isApiError = true;
+  readonly error: string;
+
+  constructor(error: string) {
+    super("API error: " + error);
+    this.error = error;
+  }
+}
 
 @Injectable({
   providedIn: 'root',
@@ -93,6 +103,9 @@ export class ApiService {
 
     if (response.status === 201)
       return await response.json() as UserModel;
+
+    if (response.status === 400)
+      throw new ApiError((await response.json())['error']);
 
     throw new Error('Failed to create user');
   }

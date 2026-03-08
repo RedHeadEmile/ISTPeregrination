@@ -5,12 +5,14 @@ import {Menu} from 'primeng/menu';
 import {Button} from 'primeng/button';
 import {MenuItem} from 'primeng/api';
 import {AuthenticationService} from './core/services/authentication.service';
+import {DialogService} from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, Toast, RouterLink, Menu, Button],
   templateUrl: './app.html',
-  styleUrl: './app.less'
+  styleUrl: './app.less',
+  providers: [DialogService]
 })
 export class App implements OnInit {
   private readonly _authenticationService = inject(AuthenticationService);

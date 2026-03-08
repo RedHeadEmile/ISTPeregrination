@@ -183,7 +183,7 @@ class UserService implements IUserService
 
     public function getAllUsers(): array
     {
-        $stmt = DatabaseService::getInstance()->getPDO()->prepare("SELECT * FROM user");
+        $stmt = DatabaseService::getInstance()->getPDO()->prepare("SELECT * FROM user ORDER BY lastname, firstname");
         $stmt->execute();
         $result = $stmt->fetchAll(\PDO::FETCH_NAMED);
         $users = [];

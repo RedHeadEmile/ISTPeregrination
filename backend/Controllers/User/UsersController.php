@@ -3,6 +3,10 @@
 namespace ISTPeregrination\Controllers\User;
 
 use ISTPeregrination\Controllers\AbstractController;
+use ISTPeregrination\Exceptions\EmailAlreadyExistingException;
+use ISTPeregrination\Exceptions\InvalidEmailException;
+use ISTPeregrination\Exceptions\InvalidNameException;
+use ISTPeregrination\Exceptions\PasswordTooWeakException;
 use ISTPeregrination\Services\User\Models\UserModel;
 use ISTPeregrination\Services\User\UserService;
 
@@ -49,9 +53,18 @@ class UsersController extends AbstractController
             $createdUser = UserService::getInstance()->register($newUser, $password);
             http_response_code(201);
             echo json_encode($createdUser->getAsViewModel());
-        } catch (\Exception $e) {
+        } catch (EmailAlreadyExistingException) {
             http_response_code(400);
-            echo json_encode(["error" => $e->getMessage()]);
+            echo json_encode(["error" => "email_already_exists"]);
+        } catch (InvalidEmailException) {
+            http_response_code(400);
+            echo json_encode(["error" => "invalid_email"]);
+        } catch (InvalidNameException) {
+            http_response_code(400);
+            echo json_encode(["error" => "invalid_name"]);
+        } catch (PasswordTooWeakException) {
+            http_response_code(400);
+            echo json_encode(["error" => "password_too_weak"]);
         }
     }
 }
