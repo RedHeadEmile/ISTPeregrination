@@ -15,7 +15,6 @@ use ISTPeregrination\Controllers\MobilityReviews\MobilityReviewsController;
 use ISTPeregrination\Controllers\MobilityReviews\MobilityReviewsIndexController;
 use ISTPeregrination\Controllers\User\CurrentUserController;
 use ISTPeregrination\Controllers\User\CurrentUserLoginController;
-use ISTPeregrination\Controllers\User\UserRegisterController;
 use ISTPeregrination\Controllers\User\UserResetPasswordController;
 use ISTPeregrination\Controllers\User\UserResetPasswordTokenController;
 use ISTPeregrination\Controllers\User\UsersController;

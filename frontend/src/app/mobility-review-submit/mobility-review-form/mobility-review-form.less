@@ -1,0 +1,52 @@
+:host {
+  display: flex;
+  width: 100%;
+}
+
+.small {
+  font-size: 0.8rem;
+  color: gray;
+}
+
+.error-message {
+  font-size: 0.8rem;
+}
+
+.splitter {
+  font-size: 1.75rem;
+  position: relative;
+  padding-top: 1rem;
+
+  &::before {
+    content: " ";
+    width: 100%;
+    height: 1px;
+    background-color: var(--p-primary-500);
+    position: absolute;
+    bottom: 100%;
+  }
+
+  &:first-child {
+    padding-top: 0;
+    &::before {
+      display: none;
+    }
+  }
+}
+
+.text-field, .radio-field {
+  display: flex;
+  flex-direction: column;
+
+  & > *:first-child {
+    font-size: 1.1em;
+  }
+}
+
+.text-field {
+  gap: 0.5rem;
+}
+
+.radio-field {
+  gap: 0.75rem;
+}

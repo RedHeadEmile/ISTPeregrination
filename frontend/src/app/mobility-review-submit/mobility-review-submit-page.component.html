@@ -1,1 +1,11 @@
-<p>mobility-review-submit works!</p>
+@if (showThankYou) {
+  <div class="thank-you">
+    <span>Merci pour votre contribution !</span>
+    <span>Votre contribution sera affiché dès qu'un modérateur l'aura approuvé.</span>
+    <a [routerLink]="'/'"><p-button type="button" [size]="'large'">Retour à l'accueil</p-button></a>
+  </div>
+} @else {
+  <div class="form-container">
+    <app-mobility-review-form [(mobilityReview)]="mobilityReview" (onFormSubmit)="submitMobilityReview()" />
+  </div>
+}

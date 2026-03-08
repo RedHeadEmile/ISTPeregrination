@@ -19,6 +19,7 @@ class MobilityReviewService implements IMobilityReviewService
     {
         $reviews = [];
         $stmt = DatabaseService::getInstance()->getPDO()->prepare("SELECT * FROM `mobilityreview`");
+        $stmt->execute();
         $results = $stmt->fetchAll(PDO::FETCH_NAMED);
         foreach ($results as $result) {
             $reviews[] = MobilityReviewModel::fromDatabaseRecord($result);
@@ -29,21 +30,24 @@ class MobilityReviewService implements IMobilityReviewService
     public function submitMobilityReview(MobilityReviewModel $model): void
     {
         $stmt = DatabaseService::getInstance()->getPDO()->prepare(
-            "INSERT INTO `mobilityreview` (reviewd, firstname, lastname, sector, mobilityyear, allowcontact, 
+            "INSERT INTO `mobilityreview` (reviewed, firstname, lastname, sector, mobilityyear, allowcontact, 
                               email, linkedin, countrycode, city, hostorganization, ismobilityprofessional, 
                               contractstatuswhilemobility, contractstatusdetailswhilemobility, mobilityperiod, 
-                              hadbreaks, breaksdetails, neededvisa, visadetails, visadelaysforasking, visatips, 
-                              visacost, vaccinationdetails, transportationmeans, transportationdetails, 
-                              accommodationtype, accommodationdetails, accomodationcost, livingcost, financialaid, 
-                              neededtoopenbankaccount, spokenlanguage, languagelevel, integration, 
-                              prosandconsofthecountry, tipsforthecountry, whatwouldyouchange, 
-                              adviceforfuturemobilitystudents)
+                              hadbreaks, breaksbefore, breakswhile, breaksafter, neededvisa, visadetails, 
+                              visadelaysforasking, visatips, visacost, vaccinationdetails, transportationmeans, 
+                              transportationdetails, accommodationisuniversity, accommodationisshared, 
+                              accommodationisstudio, accommodationissomeone, accommodationisyouthhostel, 
+                              accommodationdetails, accomodationcost, livingcost, financialaid, neededtoopenbankaccount, 
+                              spokenlanguage, languagelevel, integration, prosandconsofthecountry, tipsforthecountry, 
+                              whatwouldyouchange, adviceforfuturemobilitystudents)
                     VALUES(0, :firstname, :lastname, :sector, :mobilityyear, :allowcontact, :email, :linkedin, 
                            :countrycode, :city, :hostorganization, :ismobilityprofessional, 
                            :contractstatuswhilemobility, :contractstatusdetailswhilemobility, :mobilityperiod, 
-                           :hadbreaks, :breaksdetails, :neededvisa, :visadetails, :visadelaysforasking, :visatips, 
-                           :visacost, :vaccinationdetails, :transportationmeans, :transportationdetails, 
-                           :accommodationtype, :accommodationdetails, :accomodationcost, :livingcost, :financialaid, 
+                           :hadbreaks, :breaksbefore, :breakswhile, :breaksafter, :neededvisa, :visadetails, 
+                           :visadelaysforasking, :visatips, :visacost, :vaccinationdetails, :transportationmeans, 
+                           :transportationdetails, :accommodationisuniversity, :accommodationisshared, 
+                           :accommodationisstudio, :accommodationissomeone, :accommodationisyouthhostel, 
+                           :accommodationdetails, :accomodationcost, :livingcost, :financialaid, 
                            :neededtoopenbankaccount, :spokenlanguage, :languagelevel, :integration, 
                            :prosandconsofthecountry, :tipsforthecountry, :whatwouldyouchange, 
                            :adviceforfuturemobilitystudents);");
@@ -63,7 +67,9 @@ class MobilityReviewService implements IMobilityReviewService
             'contractstatusdetailswhilemobility' => $model->contractStatusDetailsWhileMobility,
             'mobilityperiod' => $model->mobilityPeriod,
             'hadbreaks' => $model->hadBreaks,
-            'breaksdetails' => $model->breaksDetails,
+            'breaksbefore' => $model->breaksBefore,
+            'breakswhile' => $model->breaksWhile,
+            'breaksafter' => $model->breaksAfter,
             'neededvisa' => $model->neededVisa,
             'visadetails' => $model->visaDetails,
             'visadelaysforasking' => $model->visaDelaysForAsking,
@@ -72,7 +78,11 @@ class MobilityReviewService implements IMobilityReviewService
             'vaccinationdetails' => $model->vaccinationDetails,
             'transportationmeans' => $model->transportationMeans,
             'transportationdetails' => $model->transportationDetails,
-            'accommodationtype' => $model->accommodationType,
+            'accommodationisuniversity' => $model->accommodationIsUniversity,
+            'accommodationisshared' => $model->accommodationIsShared,
+            'accommodationisstudio' => $model->accommodationIsStudio,
+            'accommodationissomeone' => $model->accommodationIsSomeone,
+            'accommodationisyouthhostel' => $model->accommodationIsYouthHostel,
             'accommodationdetails' => $model->accommodationDetails,
             'accomodationcost' => $model->accommodationCost,
             'livingcost' => $model->livingCost,
@@ -96,13 +106,13 @@ class MobilityReviewService implements IMobilityReviewService
 
     public function approveMobilityReview(int $reviewId): void
     {
-        $stmt = DatabaseService::getInstance()->getPDO()->prepare("UPDATE `mobilityreview` SET `reviewd` = 1 WHERE `idmobilityreviewid` = ?");
+        $stmt = DatabaseService::getInstance()->getPDO()->prepare("UPDATE `mobilityreview` SET `reviewed` = 1 WHERE `mobilityreviewid` = ?");
         $stmt->execute([$reviewId]);
     }
 
     public function deleteMobilityReview(int $reviewId): void
     {
-        $stmt = DatabaseService::getInstance()->getPDO()->prepare("DELETE FROM `mobilityreview` WHERE `idmobilityreviewid` = ?");
+        $stmt = DatabaseService::getInstance()->getPDO()->prepare("DELETE FROM `mobilityreview` WHERE `mobilityreviewid` = ?");
         $stmt->execute([$reviewId]);
     }
 }

@@ -276,8 +276,11 @@ function verify_date(mixed $raw_datetime, bool $with_time = true, bool $remove_t
  */
 function verify_bool(mixed $value, bool $allow_null = false): bool|null
 {
-    if ($value === null && !$allow_null)
-        bad_request('Invalid boolean');
+    if ($value === null) {
+        if ($allow_null)
+            return null;
+        bad_request('Invalid boolean ' . $value);
+    }
 
     if (gettype($value) === 'string') {
         if ($value === 'true')
@@ -294,7 +297,7 @@ function verify_bool(mixed $value, bool $allow_null = false): bool|null
     }
 
     if (gettype($value) !== 'boolean')
-        bad_request('Invalid boolean');
+        bad_request('Invalid boolean (' . gettype($value) . ')');
 
     return $value;
 }

@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, HostListener, inject, OnInit, viewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, HostListener, inject, viewChild} from '@angular/core';
 import svgMap, {CountryID} from 'svgmap';
 import {ApiService} from '../core/services/api.service';
 import {MobilityReviewModel} from '../core/models/mobility-review.model';
@@ -12,7 +12,7 @@ export const countryNames: { [ countryID: string ]: string } = {"AF":"Afghanista
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.less',
 })
-export class HomePageComponent implements OnInit, AfterViewInit {
+export class HomePageComponent implements AfterViewInit {
   private readonly _apiService = inject(ApiService);
 
   mapContainer = viewChild<ElementRef<HTMLDivElement>>('theWorld');
@@ -20,14 +20,12 @@ export class HomePageComponent implements OnInit, AfterViewInit {
   private _map?: svgMap;
   private _mobilityReviews: { [countryID: string]: MobilityReviewModel[]} = {};
 
-  async ngOnInit(): Promise<void> {
+  async ngAfterViewInit(): Promise<void> {
     allCountryIDs.forEach(countryID => this._mobilityReviews[countryID] = []);
     (await this._apiService.getMobilityReviews()).forEach(mobilityReview =>
       this._mobilityReviews[mobilityReview.countryCode].push(mobilityReview)
     );
-  }
 
-  ngAfterViewInit() {
     const targetElementId = this.mapContainer()?.nativeElement.id;
     if (!targetElementId)
       throw new Error('Map container element not found');

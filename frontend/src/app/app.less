@@ -1,0 +1,40 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.header {
+  height: 5rem;
+
+  border-bottom: 3px solid var(--p-primary-500);
+  display: flex;
+  padding: 1rem;
+  align-items: center;
+  gap: 1rem;
+
+  & > a {
+    height: 100%;
+  }
+}
+
+img {
+  max-height: 100%;
+  max-width: 100%;
+}
+
+h1 {
+  margin: 0;
+  padding: 0;
+}
+
+.content {
+  display: flex;
+  flex-grow: 1;
+  min-height: 0;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 500;
+}

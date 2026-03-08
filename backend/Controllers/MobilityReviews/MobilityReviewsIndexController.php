@@ -15,26 +15,39 @@ class MobilityReviewsIndexController extends AbstractController
 
     public function get(): void
     {
-        $this->jsonResponse(MobilityReviewService::getInstance()->getAllMobilityReviews());
+        $mobilityReviews = MobilityReviewService::getInstance()->getAllMobilityReviews();
+
+        if ($this->getCurrentUser() === null) {
+            foreach ($mobilityReviews as $review) {
+                if (!$review->allowContacts) {
+                    $review->email = null;
+                    $review->linkedin = null;
+                }
+            }
+        }
+
+        $this->jsonResponse($mobilityReviews);
     }
 
     public function post(): void
     {
-        list($firstname, $lastname, $sector, $mobilityYear, $allowContacts, $email, $linkedin, $countryCode, $city,
-            $hostOrganization, $isMobilityProfessional, $contractStatusWhileMobility,
-            $contractStatusDetailsWhileMobility, $mobilityPeriod, $hadBreaks, $breaksDetails, $neededVisa, $visaDetails,
-            $visaDelaysForAsking, $visaTips, $visaCost, $vaccinationDetails, $transportationMeans,
-            $transportationDetails, $accommodationType, $accommodationDetails, $accommodationCost, $livingCost,
+        list($sector, $mobilityYear, $allowContacts, $countryCode, $city, $hostOrganization, $isMobilityProfessional,
+            $mobilityPeriod, $hadBreaks, $neededVisa, $transportationMeans, $accommodationCost, $livingCost,
             $financialAid, $neededToOpenBankAccount, $spokenLanguage, $languageLevel, $integration,
-            $prosAndConsOfTheCountry, $tipsForTheCountry, $whatWouldYouChange, $adviceForFutureMobilityStudents) =
-            json_body(['firstname', 'lastname', 'sector', 'mobilityYear', 'allowContacts', 'email', 'linkedin',
-                'countryCode', 'city', 'hostOrganization', 'isMobilityProfessional', 'contractStatusWhileMobility',
-                'contractStatusDetailsWhileMobility', 'mobilityPeriod', 'hadBreaks', 'breaksDetails', 'neededVisa',
-                'visaDetails', 'visaDelaysForAsking', 'visaTips', 'visaCost', 'vaccinationDetails',
-                'transportationMeans', 'transportationDetails', 'accommodationType', 'accommodationDetails',
+            $prosAndConsOfTheCountry, $tipsForTheCountry, $whatWouldYouChange, $adviceForFutureMobilityStudents,
+            $firstname, $lastname, $email, $linkedin, $contractStatusWhileMobility, $contractStatusDetailsWhileMobility,
+            $breaksBefore, $breaksWhile, $breaksAfter, $visaDetails, $visaDelaysForAsking, $visaTips, $visaCost,
+            $vaccinationDetails, $transportationDetails, $accommodationIsUniversity, $accommodationIsShared,
+            $accommodationIsStudio, $accommodationIsSomeone, $accommodationIsYouthHostel, $accommodationDetails) =
+            json_body(['sector', 'mobilityYear', 'allowContacts', 'countryCode', 'city', 'hostOrganization',
+                'isMobilityProfessional', 'mobilityPeriod', 'hadBreaks', 'neededVisa', 'transportationMeans',
                 'accommodationCost', 'livingCost', 'financialAid', 'neededToOpenBankAccount', 'spokenLanguage',
                 'languageLevel', 'integration', 'prosAndConsOfTheCountry', 'tipsForTheCountry', 'whatWouldYouChange',
-                'adviceForFutureMobilityStudents']);
+                'adviceForFutureMobilityStudents'], ['firstname', 'lastname', 'email', 'linkedin',
+                'contractStatusWhileMobility', 'contractStatusDetailsWhileMobility', 'breaksBefore', 'breaksWhile',
+                'breaksAfter', 'visaDetails', 'visaDelaysForAsking', 'visaTips', 'visaCost', 'vaccinationDetails',
+                'transportationDetails', 'accommodationIsUniversity', 'accommodationIsShared', 'accommodationIsStudio',
+                'accommodationIsSomeone', 'accommodationIsYouthHostel', 'accommodationDetails']);
 
         $review = new MobilityReviewModel();
         $review->firstname = verify_text($firstname, 0, 255, allow_null: true);
@@ -52,7 +65,9 @@ class MobilityReviewsIndexController extends AbstractController
         $review->contractStatusDetailsWhileMobility = verify_text($contractStatusDetailsWhileMobility, 0, 1000000, allow_null: true);
         $review->mobilityPeriod = verify_text($mobilityPeriod, 0, 1000000);
         $review->hadBreaks = verify_bool($hadBreaks);
-        $review->breaksDetails = verify_text($breaksDetails, 0, 1000000);
+        $review->breaksBefore = verify_bool($breaksBefore, true);
+        $review->breaksWhile = verify_bool($breaksWhile, true);
+        $review->breaksAfter = verify_bool($breaksAfter, true);
         $review->neededVisa = verify_bool($neededVisa);
         $review->visaDetails = verify_text($visaDetails, 0, 1000000, allow_null: true);
         $review->visaDelaysForAsking = verify_text($visaDelaysForAsking, 0, 1000000, allow_null: true);
@@ -61,12 +76,16 @@ class MobilityReviewsIndexController extends AbstractController
         $review->vaccinationDetails = verify_text($vaccinationDetails, 0, 1000000, allow_null: true);
         $review->transportationMeans = verify_text($transportationMeans, 0, 1000000);
         $review->transportationDetails = verify_text($transportationDetails, 0, 1000000, allow_null: true);
-        $review->accommodationType = verify_text($accommodationType, 0, 1000000);
-        $review->accommodationDetails = verify_text($accommodationDetails, 0, 1000000);
+        $review->accommodationIsUniversity = verify_bool($accommodationIsUniversity, true);
+        $review->accommodationIsShared = verify_bool($accommodationIsShared, true);
+        $review->accommodationIsStudio = verify_bool($accommodationIsStudio, true);
+        $review->accommodationIsSomeone = verify_bool($accommodationIsSomeone, true);
+        $review->accommodationIsYouthHostel = verify_bool($accommodationIsYouthHostel, true);
+        $review->accommodationDetails = verify_text($accommodationDetails, 0, 1000000, allow_null: true);
         $review->accommodationCost = verify_text($accommodationCost, 0, 1000000);
         $review->livingCost = verify_text($livingCost, 0, 1000000);
         $review->financialAid = verify_text($financialAid, 0, 1000000);
-        $review->neededToOpenBankAccount = verify_bool($neededToOpenBankAccount);
+        $review->neededToOpenBankAccount = verify_text($neededToOpenBankAccount, 0, 1000000);
         $review->spokenLanguage = verify_text($spokenLanguage, 0, 1000000);
         $review->languageLevel = verify_text($languageLevel, 0, 1000000);
         $review->integration = verify_text($integration, 0, 1000000);

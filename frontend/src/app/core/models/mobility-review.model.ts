@@ -16,7 +16,9 @@ export interface MobilityReviewModel {
   contractStatusDetailsWhileMobility?: string;
   mobilityPeriod: string;
   hadBreaks: boolean;
-  breaksDetails?: string;
+  breaksBefore?: boolean;
+  breaksWhile?: boolean;
+  breaksAfter?: boolean;
   neededVisa: boolean;
   visaDetails?: string;
   visaDelaysForAsking?: string;
@@ -25,7 +27,11 @@ export interface MobilityReviewModel {
   vaccinationDetails?: string;
   transportationMeans: string;
   transportationDetails?: string;
-  accommodationType: string;
+  accommodationIsUniversity?: boolean;
+  accommodationIsShared?: boolean;
+  accommodationIsStudio?: boolean;
+  accommodationIsSomeone?: boolean;
+  accommodationIsYouthHostel?: boolean;
   accommodationDetails?: string;
   accommodationCost: string;
   livingCost: string;

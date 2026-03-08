@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {ChangeDetectorRef, Component, inject, OnInit} from '@angular/core';
 import {RouterLink, RouterOutlet} from '@angular/router';
 import {Toast} from 'primeng/toast';
 import {Menu} from 'primeng/menu';
@@ -12,8 +12,9 @@ import {AuthenticationService} from './core/services/authentication.service';
   templateUrl: './app.html',
   styleUrl: './app.less'
 })
-export class App {
+export class App implements OnInit {
   private readonly _authenticationService = inject(AuthenticationService);
+  private readonly _changeDetectorRef = inject(ChangeDetectorRef);
 
   menuItems: MenuItem[] = [
     {
@@ -27,6 +28,12 @@ export class App {
       routerLink: '/admin/users'
     }
   ];
+
+  async ngOnInit(): Promise<void> {
+    if (!this._authenticationService.isCurrentUserInitialized())
+      await this._authenticationService.pullCurrentUser();
+    this._changeDetectorRef.detectChanges();
+  }
 
   get isAuthenticated(): boolean {
     return !!this._authenticationService.getCurrentUser();
