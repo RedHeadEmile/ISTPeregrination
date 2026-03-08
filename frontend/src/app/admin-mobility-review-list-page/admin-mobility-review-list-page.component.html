@@ -6,6 +6,7 @@
         <th>Pays</th>
         <th>Nom</th>
         <th>Prénom</th>
+        <th>Promo</th>
         <th>État</th>
         <th style="width: 5rem"></th>
       </tr>
@@ -15,6 +16,7 @@
         <td>{{ getCountryName(mr.countryCode) }}</td>
         <td>{{ mr.lastname }}</td>
         <td>{{ mr.firstname }}</td>
+        <td>{{ mr.sector }}</td>
         <td>
           @if (mr.reviewed) {
             Acceptée

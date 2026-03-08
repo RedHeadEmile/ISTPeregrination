@@ -4,12 +4,10 @@ import {TableModule} from "primeng/table";
 import {ApiService} from '../core/services/api.service';
 import {DialogService} from 'primeng/dynamicdialog';
 import {MobilityReviewModel} from '../core/models/mobility-review.model';
-import {allCountryIDs, countryNames} from '../home/home-page.component';
-import {emojiFlags, MobilityReviewForm} from '../mobility-review-submit/mobility-review-form/mobility-review-form';
-import {AdminUserAddComponent} from '../admin-user-list-page/admin-user-add/admin-user-add.component';
 import {
   AdminMobilityReviewManagementComponent
 } from './admin-mobility-review-management/admin-mobility-review-management.component';
+import {App} from '../app';
 
 @Component({
   selector: 'app-admin-mobility-review-list',
@@ -27,13 +25,6 @@ export class AdminMobilityReviewListPageComponent implements OnInit {
 
   mobilityReviews: MobilityReviewModel[] = [];
 
-  static countryNames: Record<string, string> = {};
-  static {
-    allCountryIDs.forEach(countryID => {
-      AdminMobilityReviewListPageComponent.countryNames[countryID] = (emojiFlags[countryID] ?? '') + ' ' + countryNames[countryID];
-    });
-  }
-
   private async _pullMobilityReviews(): Promise<void> {
     this.mobilityReviews = await this._apiService.getMobilityReviews();
     this._changeDetectorRef.detectChanges();
@@ -44,7 +35,7 @@ export class AdminMobilityReviewListPageComponent implements OnInit {
   }
 
   getCountryName(countryID: string): string {
-    return AdminMobilityReviewListPageComponent.countryNames[countryID] ?? countryID;
+    return App.countryNames[countryID] ?? countryID;
   }
 
   see(mobilityReview: MobilityReviewModel): void {
