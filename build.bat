@@ -1,5 +1,5 @@
 cd frontend
-REM ng build --configuration production
+ng build --configuration production
 cd ..
 if exist "out" (
     rmdir /s /q "out"
