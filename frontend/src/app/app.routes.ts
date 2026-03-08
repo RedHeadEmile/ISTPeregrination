@@ -10,6 +10,7 @@ import {
 } from './admin-mobility-review-list-page/admin-mobility-review-list-page.component';
 import {UserResetPasswordPageComponent} from './user-reset-password/user-reset-password-page.component';
 import {authenticationGuard} from './core/guards/authentication.guard';
+import {anonymousGuard} from './core/guards/anonymouse.guard';
 
 export const routes: Routes = [
   {
@@ -43,7 +44,8 @@ export const routes: Routes = [
   {
     path: 'login',
     component: UserLoginPageComponent,
-    title: 'ISTPeregration - Connexion'
+    title: 'ISTPeregration - Connexion',
+    canActivate: [anonymousGuard]
   },
   {
     path: 'reset-password',

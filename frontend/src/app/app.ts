@@ -1,22 +1,24 @@
 import {ChangeDetectorRef, Component, inject, OnInit} from '@angular/core';
-import {RouterLink, RouterOutlet} from '@angular/router';
+import {Router, RouterLink, RouterOutlet} from '@angular/router';
 import {Toast} from 'primeng/toast';
 import {Menu} from 'primeng/menu';
 import {Button} from 'primeng/button';
-import {MenuItem} from 'primeng/api';
+import {ConfirmationService, MenuItem} from 'primeng/api';
 import {AuthenticationService} from './core/services/authentication.service';
 import {DialogService} from 'primeng/dynamicdialog';
+import {ConfirmDialog} from 'primeng/confirmdialog';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Toast, RouterLink, Menu, Button],
+  imports: [RouterOutlet, Toast, RouterLink, Menu, Button, ConfirmDialog],
   templateUrl: './app.html',
   styleUrl: './app.less',
-  providers: [DialogService]
+  providers: [DialogService, ConfirmationService]
 })
 export class App implements OnInit {
   private readonly _authenticationService = inject(AuthenticationService);
   private readonly _changeDetectorRef = inject(ChangeDetectorRef);
+  private readonly _router = inject(Router);
 
   menuItems: MenuItem[] = [
     {
@@ -28,6 +30,15 @@ export class App implements OnInit {
       label: 'Gestion des utilisateurs',
       icon: 'pi pi-user',
       routerLink: '/admin/users'
+    },
+    {
+      label: 'Déconnexion',
+      icon: 'pi pi-sign-out',
+      command: async () => {
+        await this._authenticationService.logout();
+        await this._router.navigate(['/']);
+        this._changeDetectorRef.detectChanges();
+      }
     }
   ];
 

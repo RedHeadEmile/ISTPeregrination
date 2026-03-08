@@ -2,15 +2,15 @@
   <span class="splitter">Qui es-tu ? (Identité & Context)</span>
   <div class="text-field">
     <label for="lastname">Nom <span class="small">(optionnel)</span></label>
-    <input #lastnameInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().lastname" name="lastname" id="lastname" [invalid]="lastnameInput.invalid" [fluid]="true" />
+    <input #lastnameInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().lastname" name="lastname" id="lastname" [invalid]="lastnameInput.invalid" [fluid]="true" [disabled]="readonly()" />
   </div>
   <div class="text-field">
     <label for="firstname">Prénom <span class="small">(optionnel)</span></label>
-    <input #firstnameInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().firstname" name="firstname" id="firstname" [invalid]="firstnameInput.invalid" [fluid]="true" />
+    <input #firstnameInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().firstname" name="firstname" id="firstname" [invalid]="firstnameInput.invalid" [fluid]="true" [disabled]="readonly()" />
   </div>
   <div class="text-field">
     <label for="sector">Ta Promo et Filière (Ex: ICM 2026 - Génie Industriel)</label>
-    <input #sectorInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().sector" name="sector" id="sector" [invalid]="sectorInput.invalid" [fluid]="true" required />
+    <input #sectorInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().sector" name="sector" id="sector" [invalid]="sectorInput.invalid" [fluid]="true"  [disabled]="readonly()" />
     @if (sectorInput.touched && sectorInput.errors?.['required']) {
       <span class="error-message">Ce champ est requis.</span>
     }
@@ -18,56 +18,56 @@
   <div class="radio-field">
     <span>A quel moment de ton cursus as-tu réalisé cette mobilité ?</span>
     <div class="flex-row gap-2">
-      <p-radioButton #mobilityYear="ngModel" name="mobilityYear" value="2ème année" [(ngModel)]="mobilityReview().mobilityYear" inputId="mobilityYear0" required [invalid]="mobilityYear.invalid"></p-radioButton>
+      <p-radioButton #mobilityYear="ngModel" name="mobilityYear" value="2ème année" [(ngModel)]="mobilityReview().mobilityYear" inputId="mobilityYear0" required [invalid]="mobilityYear.invalid" [disabled]="readonly()"></p-radioButton>
       <label for="mobilityYear0">2ème année</label>
     </div>
     <div class="flex-row gap-2">
-      <p-radioButton name="mobilityYear" value="3ème année" [(ngModel)]="mobilityReview().mobilityYear" inputId="mobilityYear1" required [invalid]="mobilityYear.invalid"></p-radioButton>
+      <p-radioButton name="mobilityYear" value="3ème année" [(ngModel)]="mobilityReview().mobilityYear" inputId="mobilityYear1" required [invalid]="mobilityYear.invalid" [disabled]="readonly()"></p-radioButton>
       <label for="mobilityYear1">3ème année</label>
     </div>
   </div>
   <div class="radio-field">
     <span>Acceptes-tu d'être contacté(e) par mail/LinkedIn pour des questions précises ?</span>
     <div class="flex-row gap-2">
-      <p-radioButton #allowContact="ngModel" name="allowContact" [value]="true" [(ngModel)]="mobilityReview().allowContacts" inputId="allowContact0" required [invalid]="allowContact.invalid"></p-radioButton>
+      <p-radioButton #allowContact="ngModel" name="allowContact" [value]="true" [(ngModel)]="mobilityReview().allowContacts" inputId="allowContact0" required [invalid]="allowContact.invalid" [disabled]="readonly()"></p-radioButton>
       <label for="allowContact0">Oui, avec plaisir ! (Mon contact sera visible)</label>
     </div>
     <div class="flex-row gap-2">
-      <p-radioButton name="allowContact" [value]="false" [(ngModel)]="mobilityReview().allowContacts" inputId="allowContact1" required [invalid]="allowContact.invalid"></p-radioButton>
+      <p-radioButton name="allowContact" [value]="false" [(ngModel)]="mobilityReview().allowContacts" inputId="allowContact1" required [invalid]="allowContact.invalid" [disabled]="readonly()"></p-radioButton>
       <label for="allowContact1">Non, je préfère rester anonyme</label>
     </div>
   </div>
   @if (mobilityReview().allowContacts) {
     <div class="text-field">
       <label for="email">Email <span class="small">(optionnel)</span></label>
-      <input #emailInput="ngModel" pInputText type="email" email [(ngModel)]="mobilityReview().email" name="email" id="email" [invalid]="emailInput.invalid" [fluid]="true" />
+      <input #emailInput="ngModel" pInputText type="email" email [(ngModel)]="mobilityReview().email" name="email" id="email" [invalid]="emailInput.invalid" [fluid]="true" [disabled]="readonly()" />
       @if (emailInput.touched && emailInput.errors?.['email']) {
         <span class="error-message">Adresse email incorrect</span>
       }
     </div>
     <div class="text-field">
       <label for="linkedin">LinkedIn <span class="small">(optionnel)</span></label>
-      <input #linkedinInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().linkedin" name="linkedin" id="linkedin" [invalid]="linkedinInput.invalid" [fluid]="true" />
+      <input #linkedinInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().linkedin" name="linkedin" id="linkedin" [invalid]="linkedinInput.invalid" [fluid]="true" [disabled]="readonly()" />
     </div>
   }
   <span class="splitter">La destination et Le Cadre</span>
   <div class="text-field">
     <label for="countryCode">Pays d'accueil</label>
-    <p-select #countryInput="ngModel" required name="countryCode" id="countryCode" [options]="countries" [(ngModel)]="mobilityReview().countryCode" optionLabel="name" optionValue="code" [invalid]="countryInput.invalid" [fluid]="true" appendTo="body" [filter]="true" />
+    <p-select #countryInput="ngModel" required name="countryCode" id="countryCode" [options]="countries" [(ngModel)]="mobilityReview().countryCode" optionLabel="name" optionValue="code" [invalid]="countryInput.invalid" [fluid]="true" appendTo="body" [filter]="true" [disabled]="readonly()" />
     @if (countryInput.touched && countryInput.errors?.['required']) {
       <span class="error-message">Ce champ est requis.</span>
     }
   </div>
   <div class="text-field">
     <label for="city">Ville de résidence</label>
-    <input #cityInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().city" name="city" id="city" [invalid]="cityInput.invalid" [fluid]="true" required />
+    <input #cityInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().city" name="city" id="city" [invalid]="cityInput.invalid" [fluid]="true" required [disabled]="readonly()" />
     @if (cityInput.touched && cityInput.errors?.['required']) {
       <span class="error-message">Ce champ est requis.</span>
     }
   </div>
   <div class="text-field">
     <label for="hostOrganization">Nom précis de l'oganisme d'accueil (Unisité, Entreprise, Labo...)</label>
-    <input #hostOrganizationInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().hostOrganization" name="hostOrganization" id="hostOrganization" [invalid]="hostOrganizationInput.invalid" [fluid]="true" required />
+    <input #hostOrganizationInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().hostOrganization" name="hostOrganization" id="hostOrganization" [invalid]="hostOrganizationInput.invalid" [fluid]="true" required [disabled]="readonly()" />
     @if (hostOrganizationInput.touched && hostOrganizationInput.errors?.['required']) {
       <span class="error-message">Ce champ est requis.</span>
     }
@@ -75,33 +75,33 @@
   <div class="radio-field">
     <span>Format de la mobilité</span>
     <div class="flex-row gap-2">
-      <p-radioButton #isMobilityProfessionalInput="ngModel" name="isMobilityProfessional" [value]="false" [(ngModel)]="mobilityReview().isMobilityProfessional" inputId="isMobilityProfessional0" required [invalid]="isMobilityProfessionalInput.invalid"></p-radioButton>
+      <p-radioButton #isMobilityProfessionalInput="ngModel" name="isMobilityProfessional" [value]="false" [(ngModel)]="mobilityReview().isMobilityProfessional" inputId="isMobilityProfessional0" required [invalid]="isMobilityProfessionalInput.invalid" [disabled]="readonly()"></p-radioButton>
       <label for="isMobilityProfessional0">Universitaire</label>
     </div>
     <div class="flex-row gap-2">
-      <p-radioButton name="isMobilityProfessional" [value]="true" [(ngModel)]="mobilityReview().isMobilityProfessional" inputId="isMobilityProfessional1" required [invalid]="isMobilityProfessionalInput.invalid"></p-radioButton>
+      <p-radioButton name="isMobilityProfessional" [value]="true" [(ngModel)]="mobilityReview().isMobilityProfessional" inputId="isMobilityProfessional1" required [invalid]="isMobilityProfessionalInput.invalid" [disabled]="readonly()"></p-radioButton>
       <label for="isMobilityProfessional1">Professionnel</label>
     </div>
   </div>
   <div class="radio-field">
     <span>Status de ton contrat durant la mobilité</span>
     <div class="flex-row gap-2">
-      <p-radioButton #contractStatusWhileMobilityInput="ngModel" name="contractStatusWhileMobility" [value]="1" [(ngModel)]="mobilityReview().contractStatusWhileMobility" inputId="contractStatusWhileMobility0" required [invalid]="contractStatusWhileMobilityInput.invalid"></p-radioButton>
+      <p-radioButton #contractStatusWhileMobilityInput="ngModel" name="contractStatusWhileMobility" [value]="1" [(ngModel)]="mobilityReview().contractStatusWhileMobility" inputId="contractStatusWhileMobility0" required [invalid]="contractStatusWhileMobilityInput.invalid" [disabled]="readonly()"></p-radioButton>
       <label for="contractStatusWhileMobility0">Mise en veille</label>
     </div>
     <div class="flex-row gap-2">
-      <p-radioButton name="contractStatusWhileMobility" [value]="2" [(ngModel)]="mobilityReview().contractStatusWhileMobility" inputId="contractStatusWhileMobility1" required [invalid]="contractStatusWhileMobilityInput.invalid"></p-radioButton>
+      <p-radioButton name="contractStatusWhileMobility" [value]="2" [(ngModel)]="mobilityReview().contractStatusWhileMobility" inputId="contractStatusWhileMobility1" required [invalid]="contractStatusWhileMobilityInput.invalid" [disabled]="readonly()"></p-radioButton>
       <label for="contractStatusWhileMobility1">Mise à disposition</label>
     </div>
     <div class="flex-row gap-2">
-      <p-radioButton name="contractStatusWhileMobility" [value]="3" [(ngModel)]="mobilityReview().contractStatusWhileMobility" inputId="contractStatusWhileMobility2" required [invalid]="contractStatusWhileMobilityInput.invalid"></p-radioButton>
+      <p-radioButton name="contractStatusWhileMobility" [value]="3" [(ngModel)]="mobilityReview().contractStatusWhileMobility" inputId="contractStatusWhileMobility2" required [invalid]="contractStatusWhileMobilityInput.invalid" [disabled]="readonly()"></p-radioButton>
       <label for="contractStatusWhileMobility2">Autres</label>
     </div>
-    <input #contractStatusDetailsWhileMobilityInput="ngModel" [disabled]="mobilityReview().contractStatusWhileMobility !== 3" pInputText type="text" [(ngModel)]="mobilityReview().contractStatusDetailsWhileMobility" name="contractStatusDetailsWhileMobility" id="contractStatusDetailsWhileMobility" [invalid]="contractStatusDetailsWhileMobilityInput.invalid" [fluid]="true" />
+    <input #contractStatusDetailsWhileMobilityInput="ngModel" [disabled]="mobilityReview().contractStatusWhileMobility !== 3 || readonly()" pInputText type="text" [(ngModel)]="mobilityReview().contractStatusDetailsWhileMobility" name="contractStatusDetailsWhileMobility" id="contractStatusDetailsWhileMobility" [invalid]="contractStatusDetailsWhileMobilityInput.invalid" [fluid]="true" />
   </div>
   <div class="text-field">
     <label for="mobilityPeriod">Période de mobilité (incluant d'éventuelles vacances sur place)</label>
-    <input #mobilityPeriodInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().mobilityPeriod" name="mobilityPeriod" id="mobilityPeriod" [invalid]="mobilityPeriodInput.invalid" [fluid]="true" required />
+    <input #mobilityPeriodInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().mobilityPeriod" name="mobilityPeriod" id="mobilityPeriod" [invalid]="mobilityPeriodInput.invalid" [fluid]="true" required [disabled]="readonly()" />
     @if (mobilityPeriodInput.touched && mobilityPeriodInput.errors?.['required']) {
       <span class="error-message">Ce champ est requis.</span>
     }
@@ -109,11 +109,11 @@
   <div class="flex-column gap-3">
     <span>As-tu pris des vacances/congés sur place ?</span>
     <div class="flex-row gap-2">
-      <p-radioButton #hadBreaksInput="ngModel" name="hadBreaks" [value]="true" [(ngModel)]="mobilityReview().hadBreaks" inputId="hadBreaks0" required [invalid]="hadBreaksInput.invalid"></p-radioButton>
+      <p-radioButton #hadBreaksInput="ngModel" name="hadBreaks" [value]="true" [(ngModel)]="mobilityReview().hadBreaks" inputId="hadBreaks0" required [invalid]="hadBreaksInput.invalid" [disabled]="readonly()"></p-radioButton>
       <label for="hadBreaks0">Oui</label>
     </div>
     <div class="flex-row gap-2">
-      <p-radioButton name="hadBreaks" [value]="false" [(ngModel)]="mobilityReview().hadBreaks" inputId="hadBreaks1" required [invalid]="hadBreaksInput.invalid"></p-radioButton>
+      <p-radioButton name="hadBreaks" [value]="false" [(ngModel)]="mobilityReview().hadBreaks" inputId="hadBreaks1" required [invalid]="hadBreaksInput.invalid" [disabled]="readonly()"></p-radioButton>
       <label for="hadBreaks1">Non</label>
     </div>
   </div>
@@ -121,15 +121,15 @@
     <div class="radio-field">
       <span>À quel moment ?</span>
       <div class="flex-row gap-2">
-        <p-checkbox inputId="breaksBefore" name="breaksBefore" [binary]="true" [(ngModel)]="mobilityReview().breaksBefore" />
+        <p-checkbox inputId="breaksBefore" name="breaksBefore" [binary]="true" [(ngModel)]="mobilityReview().breaksBefore" [disabled]="readonly()" />
         <label for="breaksBefore" class="ml-2">Avant la mobilité</label>
       </div>
       <div class="flex-row gap-2">
-        <p-checkbox inputId="breaksWhile" name="breaksWhile" [binary]="true" [(ngModel)]="mobilityReview().breaksWhile" />
+        <p-checkbox inputId="breaksWhile" name="breaksWhile" [binary]="true" [(ngModel)]="mobilityReview().breaksWhile" [disabled]="readonly()" />
         <label for="breaksWhile" class="ml-2">Pendant la mobilité</label>
       </div>
       <div class="flex-row gap-2">
-        <p-checkbox inputId="breaksAfter" name="breaksAfter" [binary]="true" [(ngModel)]="mobilityReview().breaksAfter" />
+        <p-checkbox inputId="breaksAfter" name="breaksAfter" [binary]="true" [(ngModel)]="mobilityReview().breaksAfter" [disabled]="readonly()" />
         <label for="breaksAfter" class="ml-2">Après la mobilité</label>
       </div>
     </div>
@@ -137,90 +137,90 @@
   <div class="radio-field">
     <span>As-tu eu besoin d'un Visa</span>
     <div class="flex-row gap-2">
-      <p-radioButton #neededVisaInput="ngModel" name="neededVisa" [value]="true" [(ngModel)]="mobilityReview().neededVisa" inputId="neededVisa0" required [invalid]="neededVisaInput.invalid"></p-radioButton>
+      <p-radioButton #neededVisaInput="ngModel" name="neededVisa" [value]="true" [(ngModel)]="mobilityReview().neededVisa" inputId="neededVisa0" required [invalid]="neededVisaInput.invalid" [disabled]="readonly()"></p-radioButton>
       <label for="neededVisa0">Oui</label>
     </div>
     <div class="flex-row gap-2">
-      <p-radioButton name="neededVisa" [value]="false" [(ngModel)]="mobilityReview().neededVisa" inputId="neededVisa1" required [invalid]="neededVisaInput.invalid"></p-radioButton>
+      <p-radioButton name="neededVisa" [value]="false" [(ngModel)]="mobilityReview().neededVisa" inputId="neededVisa1" required [invalid]="neededVisaInput.invalid" [disabled]="readonly()"></p-radioButton>
       <label for="neededVisa1">Non</label>
     </div>
   </div>
   @if (mobilityReview().neededVisa) {
     <div class="text-field">
       <label for="visaDetails">Quel est la procédure exacte ? (Nom du Visa, documents pièges à avoir...) <span class="small">(optionnel)</span></label>
-      <input #visaDetailsInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().visaDetails" name="visaDetails" id="visaDetails" [invalid]="visaDetailsInput.invalid" [fluid]="true" />
+      <input #visaDetailsInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().visaDetails" name="visaDetails" id="visaDetails" [invalid]="visaDetailsInput.invalid" [fluid]="true" [disabled]="readonly()" />
     </div>
     <div class="text-field">
       <label for="visaDelaysForAsking">Combien de temps avant le départ as-tu fais la demande ? <span class="small">(optionnel)</span></label>
-      <input #visaDelaysForAskingInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().visaDelaysForAsking" name="visaDelaysForAsking" id="visaDelaysForAsking" [invalid]="visaDelaysForAskingInput.invalid" [fluid]="true" />
+      <input #visaDelaysForAskingInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().visaDelaysForAsking" name="visaDelaysForAsking" id="visaDelaysForAsking" [invalid]="visaDelaysForAskingInput.invalid" [fluid]="true" [disabled]="readonly()" />
     </div>
     <div class="text-field">
       <label for="visaTips">Un conseil pour le Visa ? <span class="small">(optionnel)</span></label>
-      <input #visaTipsInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().visaTips" name="visaTips" id="visaTips" [invalid]="visaTipsInput.invalid" [fluid]="true" />
+      <input #visaTipsInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().visaTips" name="visaTips" id="visaTips" [invalid]="visaTipsInput.invalid" [fluid]="true" [disabled]="readonly()" />
     </div>
     <div class="text-field">
       <label for="visaCost">Combien t'a-t-il coûté au total ? <span class="small">(optionnel)</span></label>
-      <input #visaCostInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().visaCost" name="visaCost" id="visaCost" [invalid]="visaCostInput.invalid" [fluid]="true" />
+      <input #visaCostInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().visaCost" name="visaCost" id="visaCost" [invalid]="visaCostInput.invalid" [fluid]="true" [disabled]="readonly()" />
     </div>
   }
   <div class="text-field">
     <label for="vaccinationDetails">As-tu eu besoin de vaccins spécifiques ou d'une assurance santé particulière ? <span class="small">(optionnel)</span></label>
-    <input #vaccinationDetailsInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().vaccinationDetails" name="vaccinationDetails" id="vaccinationDetails" [invalid]="vaccinationDetailsInput.invalid" [fluid]="true" />
+    <input #vaccinationDetailsInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().vaccinationDetails" name="vaccinationDetails" id="vaccinationDetails" [invalid]="vaccinationDetailsInput.invalid" [fluid]="true" [disabled]="readonly()" />
   </div>
   <div class="radio-field">
     <span>Mode de transport principal jusqu'au pays</span>
     <div class="flex-row gap-2">
-      <p-radioButton #transportationMeansInput="ngModel" name="transportationMeans" [value]="'Avion'" [(ngModel)]="mobilityReview().transportationMeans" inputId="transportationMeans0" required [invalid]="transportationMeansInput.invalid"></p-radioButton>
+      <p-radioButton #transportationMeansInput="ngModel" name="transportationMeans" [value]="'Avion'" [(ngModel)]="mobilityReview().transportationMeans" inputId="transportationMeans0" required [invalid]="transportationMeansInput.invalid" [disabled]="readonly()"></p-radioButton>
       <label for="transportationMeans0">Avion</label>
     </div>
     <div class="flex-row gap-2">
-      <p-radioButton name="transportationMeans" [value]="'Train'" [(ngModel)]="mobilityReview().transportationMeans" inputId="transportationMeans1" required [invalid]="transportationMeansInput.invalid"></p-radioButton>
+      <p-radioButton name="transportationMeans" [value]="'Train'" [(ngModel)]="mobilityReview().transportationMeans" inputId="transportationMeans1" required [invalid]="transportationMeansInput.invalid" [disabled]="readonly()"></p-radioButton>
       <label for="transportationMeans1">Train</label>
     </div>
     <div class="flex-row gap-2">
-      <p-radioButton name="transportationMeans" [value]="'Voiture'" [(ngModel)]="mobilityReview().transportationMeans" inputId="transportationMeans2" required [invalid]="transportationMeansInput.invalid"></p-radioButton>
+      <p-radioButton name="transportationMeans" [value]="'Voiture'" [(ngModel)]="mobilityReview().transportationMeans" inputId="transportationMeans2" required [invalid]="transportationMeansInput.invalid" [disabled]="readonly()"></p-radioButton>
       <label for="transportationMeans2">Voiture</label>
     </div>
     <div class="flex-row gap-2">
-      <p-radioButton name="transportationMeans" [value]="'Bâteau'" [(ngModel)]="mobilityReview().transportationMeans" inputId="transportationMeans3" required [invalid]="transportationMeansInput.invalid"></p-radioButton>
+      <p-radioButton name="transportationMeans" [value]="'Bâteau'" [(ngModel)]="mobilityReview().transportationMeans" inputId="transportationMeans3" required [invalid]="transportationMeansInput.invalid" [disabled]="readonly()"></p-radioButton>
       <label for="transportationMeans3">Bâteau</label>
     </div>
   </div>
   <div class="text-field">
     <label for="transportationDetails">Comment t'es-tu rendu sur place (Détails sur le trajet, compagnie...) <span class="small">(optionnel)</span></label>
-    <input #transportationDetailsInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().transportationDetails" name="transportationDetails" id="transportationDetails" [invalid]="transportationDetailsInput.invalid" [fluid]="true" />
+    <input #transportationDetailsInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().transportationDetails" name="transportationDetails" id="transportationDetails" [invalid]="transportationDetailsInput.invalid" [fluid]="true" [disabled]="readonly()" />
   </div>
   <span class="splitter">Le Logement</span>
   <div class="radio-field">
     <span>Où as-tu logé ?</span>
     <div class="flex-row gap-2">
-      <p-checkbox inputId="accommodationIsUniversity" name="accommodationIsUniversity" [binary]="true" [(ngModel)]="mobilityReview().accommodationIsUniversity" />
+      <p-checkbox inputId="accommodationIsUniversity" name="accommodationIsUniversity" [binary]="true" [(ngModel)]="mobilityReview().accommodationIsUniversity" [disabled]="readonly()" />
       <label for="accommodationIsUniversity" class="ml-2">Résidence universitaire (Publique ou Privée)</label>
     </div>
     <div class="flex-row gap-2">
-      <p-checkbox inputId="accommodationIsShared" name="accommodationIsShared" [binary]="true" [(ngModel)]="mobilityReview().accommodationIsShared" />
+      <p-checkbox inputId="accommodationIsShared" name="accommodationIsShared" [binary]="true" [(ngModel)]="mobilityReview().accommodationIsShared" [disabled]="readonly()" />
       <label for="accommodationIsShared" class="ml-2">Colocation (Appartement partagé)</label>
     </div>
     <div class="flex-row gap-2">
-      <p-checkbox inputId="accommodationIsStudio" name="accommodationIsStudio" [binary]="true" [(ngModel)]="mobilityReview().accommodationIsStudio" />
+      <p-checkbox inputId="accommodationIsStudio" name="accommodationIsStudio" [binary]="true" [(ngModel)]="mobilityReview().accommodationIsStudio" [disabled]="readonly()" />
       <label for="accommodationIsStudio" class="ml-2">Studio / Appartement seul</label>
     </div>
     <div class="flex-row gap-2">
-      <p-checkbox inputId="accommodationIsSomeone" name="accommodationIsSomeone" [binary]="true" [(ngModel)]="mobilityReview().accommodationIsSomeone" />
+      <p-checkbox inputId="accommodationIsSomeone" name="accommodationIsSomeone" [binary]="true" [(ngModel)]="mobilityReview().accommodationIsSomeone" [disabled]="readonly()" />
       <label for="accommodationIsSomeone" class="ml-2">Chez l'habitant / Famille d'accueil</label>
     </div>
     <div class="flex-row gap-2">
-      <p-checkbox inputId="accommodationIsYouthHostel" name="accommodationIsYouthHostel" [binary]="true" [(ngModel)]="mobilityReview().accommodationIsYouthHostel" />
+      <p-checkbox inputId="accommodationIsYouthHostel" name="accommodationIsYouthHostel" [binary]="true" [(ngModel)]="mobilityReview().accommodationIsYouthHostel" [disabled]="readonly()" />
       <label for="accommodationIsYouthHostel" class="ml-2">Auberge de jeunesse</label>
     </div>
   </div>
   <div class="text-field">
     <label for="accommodationDetails">Comment as-tu trouvé ce(s) logement(s) ? (Sites web précis, agences...) <span class="small">(optionnel)</span></label>
-    <input #accommodationDetailsInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().accommodationDetails" name="accommodationDetails" id="accommodationDetails" [invalid]="accommodationDetailsInput.invalid" [fluid]="true" />
+    <input #accommodationDetailsInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().accommodationDetails" name="accommodationDetails" id="accommodationDetails" [invalid]="accommodationDetailsInput.invalid" [fluid]="true" [disabled]="readonly()" />
   </div>
   <div class="text-field">
     <label for="accommodationCost">Quel était le montant de ton loyer mensuel ?</label>
-    <input #accommodationCostInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().accommodationCost" name="accommodationCost" id="accommodationCost" [invalid]="accommodationCostInput.invalid" [fluid]="true" required />
+    <input #accommodationCostInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().accommodationCost" name="accommodationCost" id="accommodationCost" [invalid]="accommodationCostInput.invalid" [fluid]="true" required [disabled]="readonly()" />
     @if (accommodationCostInput.touched && accommodationCostInput.errors?.['required']) {
       <span class="error-message">Ce champ est requis.</span>
     }
@@ -228,21 +228,21 @@
   <span class="splitter">Le Porte-Monnaie (Budget Réel)</span>
   <div class="text-field">
     <label for="livingCost">Coût de la vie : Donne-nous quelques exemple de prix (Une bière, un ticket de bus, un repas au resto U...)</label>
-    <input #livingCostInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().livingCost" name="livingCost" id="livingCost" [invalid]="livingCostInput.invalid" [fluid]="true" required />
+    <input #livingCostInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().livingCost" name="livingCost" id="livingCost" [invalid]="livingCostInput.invalid" [fluid]="true" required [disabled]="readonly()" />
     @if (livingCostInput.touched && livingCostInput.errors?.['required']) {
       <span class="error-message">Ce champ est requis.</span>
     }
   </div>
   <div class="text-field">
     <label for="financialAid">Quelles aides financières as-tu réellement touchées ? (Montants approximatifs)</label>
-    <input #financialAidInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().financialAid" name="financialAid" id="financialAid" [invalid]="financialAidInput.invalid" [fluid]="true" required />
+    <input #financialAidInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().financialAid" name="financialAid" id="financialAid" [invalid]="financialAidInput.invalid" [fluid]="true" required [disabled]="readonly()" />
     @if (financialAidInput.touched && financialAidInput.errors?.['required']) {
       <span class="error-message">Ce champ est requis.</span>
     }
   </div>
   <div class="text-field">
     <label for="neededToOpenBankAccount">L'ouverture d'un compte bancaire local était-elle nécessaire ? Si oui, quelle banque choisir ?</label>
-    <input #neededToOpenBankAccountInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().neededToOpenBankAccount" name="neededToOpenBankAccount" id="neededToOpenBankAccount" [invalid]="neededToOpenBankAccountInput.invalid" [fluid]="true" required />
+    <input #neededToOpenBankAccountInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().neededToOpenBankAccount" name="neededToOpenBankAccount" id="neededToOpenBankAccount" [invalid]="neededToOpenBankAccountInput.invalid" [fluid]="true" required [disabled]="readonly()" />
     @if (neededToOpenBankAccountInput.touched && neededToOpenBankAccountInput.errors?.['required']) {
       <span class="error-message">Ce champ est requis.</span>
     }
@@ -250,21 +250,21 @@
   <span class="splitter">Vie sociale, Tourisme et Intégration</span>
   <div class="text-field">
     <label for="spokenLanguage">Langue que vous avez parlée sur place</label>
-    <input #spokenLanguageInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().spokenLanguage" name="spokenLanguage" id="spokenLanguage" [invalid]="spokenLanguageInput.invalid" [fluid]="true" required />
+    <input #spokenLanguageInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().spokenLanguage" name="spokenLanguage" id="spokenLanguage" [invalid]="spokenLanguageInput.invalid" [fluid]="true" required [disabled]="readonly()" />
     @if (spokenLanguageInput.touched && spokenLanguageInput.errors?.['required']) {
       <span class="error-message">Ce champ est requis.</span>
     }
   </div>
   <div class="text-field">
     <label for="languageLevel">Quel niveau avais-tu avant de partir ? Quel niveau as-tu maintenant ?</label>
-    <input #languageLevelInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().languageLevel" name="languageLevel" id="languageLevel" [invalid]="languageLevelInput.invalid" [fluid]="true" required />
+    <input #languageLevelInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().languageLevel" name="languageLevel" id="languageLevel" [invalid]="languageLevelInput.invalid" [fluid]="true" required [disabled]="readonly()" />
     @if (languageLevelInput.touched && languageLevelInput.errors?.['required']) {
       <span class="error-message">Ce champ est requis.</span>
     }
   </div>
   <div class="text-field">
     <label for="integration">Comment s'est passée l'intégration ? (Facile de rencontrer des locaux ? Beaucoup d'internationaux ? Solitude ?)</label>
-    <input #integrationInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().integration" name="integration" id="integration" [invalid]="integrationInput.invalid" [fluid]="true" required />
+    <input #integrationInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().integration" name="integration" id="integration" [invalid]="integrationInput.invalid" [fluid]="true" required [disabled]="readonly()" />
     @if (integrationInput.touched && integrationInput.errors?.['required']) {
       <span class="error-message">Ce champ est requis.</span>
     }
@@ -272,33 +272,35 @@
   <span class="splitter">Le Bilan</span>
   <div class="text-field">
     <label for="prosAndConsOfTheCountry">Avantages / Inconvénients du pays</label>
-    <input #prosAndConsOfTheCountryInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().prosAndConsOfTheCountry" name="prosAndConsOfTheCountry" id="prosAndConsOfTheCountry" [invalid]="prosAndConsOfTheCountryInput.invalid" [fluid]="true" required />
+    <input #prosAndConsOfTheCountryInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().prosAndConsOfTheCountry" name="prosAndConsOfTheCountry" id="prosAndConsOfTheCountry" [invalid]="prosAndConsOfTheCountryInput.invalid" [fluid]="true" required [disabled]="readonly()" />
     @if (prosAndConsOfTheCountryInput.touched && prosAndConsOfTheCountryInput.errors?.['required']) {
       <span class="error-message">Ce champ est requis.</span>
     }
   </div>
   <div class="text-field">
     <label for="tipsForTheCountry">Un conseil sur le pays ?</label>
-    <input #tipsForTheCountryInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().tipsForTheCountry" name="tipsForTheCountry" id="tipsForTheCountry" [invalid]="tipsForTheCountryInput.invalid" [fluid]="true" required />
+    <input #tipsForTheCountryInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().tipsForTheCountry" name="tipsForTheCountry" id="tipsForTheCountry" [invalid]="tipsForTheCountryInput.invalid" [fluid]="true" required [disabled]="readonly()" />
     @if (tipsForTheCountryInput.touched && tipsForTheCountryInput.errors?.['required']) {
       <span class="error-message">Ce champ est requis.</span>
     }
   </div>
   <div class="text-field">
     <label for="whatWouldYouChange">Si c'était à refaire, que changerais-tu ? (Partir plus tôt, plus tard, choisir une autre coloc, économiser plus...)</label>
-    <input #whatWouldYouChangeInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().whatWouldYouChange" name="whatWouldYouChange" id="whatWouldYouChange" [invalid]="whatWouldYouChangeInput.invalid" [fluid]="true" required />
+    <input #whatWouldYouChangeInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().whatWouldYouChange" name="whatWouldYouChange" id="whatWouldYouChange" [invalid]="whatWouldYouChangeInput.invalid" [fluid]="true" required [disabled]="readonly()" />
     @if (whatWouldYouChangeInput.touched && whatWouldYouChangeInput.errors?.['required']) {
       <span class="error-message">Ce champ est requis.</span>
     }
   </div>
   <div class="text-field">
     <label for="adviceForFutureMobilityStudents">Le mot de la fin / Ton meilleur souvenir</label>
-    <input #adviceForFutureMobilityStudentsInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().adviceForFutureMobilityStudents" name="adviceForFutureMobilityStudents" id="adviceForFutureMobilityStudents" [invalid]="adviceForFutureMobilityStudentsInput.invalid" [fluid]="true" required />
+    <input #adviceForFutureMobilityStudentsInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().adviceForFutureMobilityStudents" name="adviceForFutureMobilityStudents" id="adviceForFutureMobilityStudents" [invalid]="adviceForFutureMobilityStudentsInput.invalid" [fluid]="true" required [disabled]="readonly()" />
     @if (adviceForFutureMobilityStudentsInput.touched && adviceForFutureMobilityStudentsInput.errors?.['required']) {
       <span class="error-message">Ce champ est requis.</span>
     }
   </div>
-  <div class="flex-row">
-    <button [disabled]="form.invalid" pButton type="submit" [fluid]="true">{{ submitLabel() }}</button>
-  </div>
+  @if (!readonly()) {
+    <div class="flex-row">
+      <button [disabled]="form.invalid" pButton type="submit" [fluid]="true">{{ submitLabel() }}</button>
+    </div>
+  }
 </form>

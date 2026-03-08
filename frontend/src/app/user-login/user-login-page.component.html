@@ -1,3 +1,4 @@
+<span class="title">Connexion</span>
 <form ngForm #form="ngForm" (ngSubmit)="login()" class="flex-column gap-3">
   <div class="flex-column gap-2">
     <label for="email">Adresse email</label>
@@ -12,5 +13,6 @@
   </div>
   @if (!!errorMessage) {
     <span class="error-message">{{ errorMessage }}</span>
+    <p-button [type]="'button'" outlined (click)="sendResetEmail()" [disabled]="emailSent">Envoyer un lien pour réinitialiser le mot de passe à {{ email }}</p-button>
   }
 </form>

@@ -15,11 +15,11 @@ class MobilityReviewService implements IMobilityReviewService
     {
     }
 
-    public function getAllMobilityReviews(): array
+    public function getAllMobilityReviews(bool $onlyReviewed): array
     {
         $reviews = [];
-        $stmt = DatabaseService::getInstance()->getPDO()->prepare("SELECT * FROM `mobilityreview`");
-        $stmt->execute();
+        $stmt = DatabaseService::getInstance()->getPDO()->prepare("SELECT * FROM `mobilityreview` WHERE `reviewed` > ? ORDER BY reviewed");
+        $stmt->execute([$onlyReviewed ? 0 : -1]);
         $results = $stmt->fetchAll(PDO::FETCH_NAMED);
         foreach ($results as $result) {
             $reviews[] = MobilityReviewModel::fromDatabaseRecord($result);

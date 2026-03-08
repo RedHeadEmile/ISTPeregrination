@@ -3,6 +3,7 @@
 namespace ISTPeregrination\Controllers\User;
 
 use ISTPeregrination\Controllers\AbstractController;
+use ISTPeregrination\Exceptions\InvalidPasswordResetTokenException;
 use ISTPeregrination\Exceptions\PasswordTooWeakException;
 use ISTPeregrination\Services\User\UserService;
 
@@ -22,7 +23,10 @@ class UserResetPasswordController extends AbstractController
         }
         catch (PasswordTooWeakException) {
             http_response_code(400);
-            echo json_encode(["error" => "Password is too weak"]);
+            echo json_encode(["error" => "password_too_weak"]);
+        } catch (InvalidPasswordResetTokenException) {
+            http_response_code(400);
+            echo json_encode(["error" => "invalid_token"]);
         }
     }
 }

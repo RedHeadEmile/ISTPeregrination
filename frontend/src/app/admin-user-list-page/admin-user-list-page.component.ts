@@ -5,12 +5,14 @@ import {TableModule} from 'primeng/table';
 import {Button} from 'primeng/button';
 import {DialogService} from 'primeng/dynamicdialog';
 import {AdminUserAddComponent} from './admin-user-add/admin-user-add.component';
+import {FormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-admin-user-list-page',
   imports: [
     TableModule,
-    Button
+    Button,
+    FormsModule
   ],
   templateUrl: './admin-user-list-page.component.html',
   styleUrl: './admin-user-list-page.component.less',

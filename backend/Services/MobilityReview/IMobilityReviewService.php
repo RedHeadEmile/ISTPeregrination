@@ -8,9 +8,10 @@ interface IMobilityReviewService
 {
     /**
      * Get all mobility reviews.
+     * @param bool $onlyReviewed Whether to only return reviewed mobility reviews.
      * @return MobilityReviewModel[] All mobility reviews.
      */
-    function getAllMobilityReviews(): array;
+    function getAllMobilityReviews(bool $onlyReviewed): array;
 
     /**
      * Submit a mobility review.

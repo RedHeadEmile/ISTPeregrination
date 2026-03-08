@@ -67,6 +67,9 @@ export class ApiService {
     if (response.status === 204)
       return;
 
+    if (response.status === 400)
+      throw new ApiError((await response.json())['error']);
+
     throw new Error('Failed to reset password');
   }
 

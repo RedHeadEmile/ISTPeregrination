@@ -28,6 +28,7 @@ export const emojiFlags: { [countryId: string]: string } = {
 export class MobilityReviewForm {
   mobilityReview = model.required<Partial<MobilityReviewModel>>();
   submitLabel = input<string>('Ajouter ma mobilité');
+  readonly = input<boolean>(false);
 
   @Output() onFormSubmit = new EventEmitter<void>();
 

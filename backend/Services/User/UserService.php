@@ -5,6 +5,7 @@ namespace ISTPeregrination\Services\User;
 use ISTPeregrination\Common\SingletonTrait;
 use ISTPeregrination\Exceptions\EmailAlreadyExistingException;
 use ISTPeregrination\Exceptions\InvalidEmailException;
+use ISTPeregrination\Exceptions\InvalidPasswordResetTokenException;
 use ISTPeregrination\Exceptions\PasswordTooWeakException;
 use ISTPeregrination\Services\Database\DatabaseService;
 use ISTPeregrination\Services\Email\EmailService;
@@ -127,14 +128,17 @@ class UserService implements IUserService
             $user->id,
         ]);
 
+        $link = $_ENV["allowed_origin"] . "/reset-password?token=" . $token;
+
         EmailService::getInstance()->send(
             $user->email,
             $user->firstname . " " . $user->lastname,
             "Réinitialisation de votre mot de passe",
-            "Bonjour " . $user->firstname . ",\n\n" .
-            "Vous avez demandé une réinitialisation de votre mot de passe. Veuillez cliquer sur le lien ci-dessous pour réinitialiser votre mot de passe :\n\n" .
-            $_ENV["FRONTEND_URL"] . "/resetpassword?token=" . $token . "\n\n" .
-            "Si vous n'avez pas demandé cette réinitialisation, veuillez ignorer cet email.\n"
+            "Bonjour " . $user->firstname . ",<br />" .
+            "Vous avez demandé une réinitialisation de votre mot de passe. <br/>" .
+            "Veuillez cliquer sur le lien ci-dessous pour réinitialiser votre mot de passe :<br/><br/>" .
+            "<a href=\"" . $link . "\">" . $link . "</a><br/><br/>" .
+            "Si vous n'avez pas demandé cette réinitialisation, veuillez ignorer cet email."
         );
     }
 
@@ -165,10 +169,10 @@ class UserService implements IUserService
     {
         $user = $this->fetchUserByPasswordResetToken($token);
         if ($user === null)
-            return;
+            throw new InvalidPasswordResetTokenException();
 
         if ($user->passwordRecoveryExpire === null || currentTimeInMillis() > $user->passwordRecoveryExpire)
-            throw new \RuntimeException("Password reset token has expired");
+            throw new InvalidPasswordResetTokenException();
 
         if (strlen($newPassword) < 8)
             throw new PasswordTooWeakException();

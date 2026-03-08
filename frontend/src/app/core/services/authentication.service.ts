@@ -1,4 +1,4 @@
-import {inject, Injectable} from '@angular/core';
+import {ChangeDetectorRef, inject, Injectable} from '@angular/core';
 import {ApiService} from './api.service';
 import {UserModel} from '../models/user.model';
 
@@ -32,5 +32,10 @@ export class AuthenticationService {
 
   async login(email: string, password: string): Promise<void> {
     this._currentUser = await this._apiService.login(email, password);
+  }
+
+  async logout(): Promise<void> {
+    await this._apiService.logout();
+    this._currentUser = undefined;
   }
 }

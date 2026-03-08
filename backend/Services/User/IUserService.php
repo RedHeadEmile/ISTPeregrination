@@ -5,6 +5,7 @@ namespace ISTPeregrination\Services\User;
 use ISTPeregrination\Exceptions\EmailAlreadyExistingException;
 use ISTPeregrination\Exceptions\InvalidEmailException;
 use ISTPeregrination\Exceptions\InvalidNameException;
+use ISTPeregrination\Exceptions\InvalidPasswordResetTokenException;
 use ISTPeregrination\Exceptions\PasswordTooWeakException;
 use ISTPeregrination\Services\User\Models\UserModel;
 
@@ -55,6 +56,7 @@ interface IUserService
      * @param string $newPassword The new password that the user wants to set, which will be securely hashed before being stored in the database.
      * @return void
      * @throws PasswordTooWeakException
+     * @throws InvalidPasswordResetTokenException
      */
     function resetPassword(string $token, string $newPassword): void;
 

@@ -15,11 +15,14 @@ class MobilityReviewsIndexController extends AbstractController
 
     public function get(): void
     {
-        $mobilityReviews = MobilityReviewService::getInstance()->getAllMobilityReviews();
+        $anonymous = $this->getCurrentUser() === null;
+        $mobilityReviews = MobilityReviewService::getInstance()->getAllMobilityReviews($anonymous);
 
-        if ($this->getCurrentUser() === null) {
+        if (!$anonymous) {
             foreach ($mobilityReviews as $review) {
                 if (!$review->allowContacts) {
+                    $review->firstname = null;
+                    $review->lastname = null;
                     $review->email = null;
                     $review->linkedin = null;
                 }
