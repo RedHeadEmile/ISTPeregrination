@@ -2,11 +2,11 @@
   <span class="splitter">Qui es-tu ? (Identité & Context)</span>
   <div class="text-field">
     <label for="lastname">Nom <span class="small">(optionnel)</span></label>
-    <input #lastnameInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().lastname" name="lastname" id="lastname" [invalid]="lastnameInput.invalid" [fluid]="true" [disabled]="readonly()" />
+    <input #lastnameInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().lastname" name="lastname" id="lastname" [invalid]="lastnameInput.invalid" [fluid]="true" [disabled]="readonly()" [maxlength]="255" />
   </div>
   <div class="text-field">
     <label for="firstname">Prénom <span class="small">(optionnel)</span></label>
-    <input #firstnameInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().firstname" name="firstname" id="firstname" [invalid]="firstnameInput.invalid" [fluid]="true" [disabled]="readonly()" />
+    <input #firstnameInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().firstname" name="firstname" id="firstname" [invalid]="firstnameInput.invalid" [fluid]="true" [disabled]="readonly()" [maxlength]="255" />
   </div>
   <div class="text-field">
     <label for="sector">Ta Promo et Filière (Ex: ICM 2026 - Génie Industriel)</label>
@@ -40,14 +40,14 @@
   @if (mobilityReview().allowContacts) {
     <div class="text-field">
       <label for="email">Email <span class="small">(optionnel)</span></label>
-      <input #emailInput="ngModel" pInputText type="email" email [(ngModel)]="mobilityReview().email" name="email" id="email" [invalid]="emailInput.invalid" [fluid]="true" [disabled]="readonly()" />
+      <input #emailInput="ngModel" pInputText type="email" email [(ngModel)]="mobilityReview().email" name="email" id="email" [invalid]="emailInput.invalid" [fluid]="true" [disabled]="readonly()" [maxlength]="255" />
       @if (emailInput.touched && emailInput.errors?.['email']) {
         <span class="error-message">Adresse email incorrect</span>
       }
     </div>
     <div class="text-field">
       <label for="linkedin">LinkedIn <span class="small">(optionnel)</span></label>
-      <input #linkedinInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().linkedin" name="linkedin" id="linkedin" [invalid]="linkedinInput.invalid" [fluid]="true" [disabled]="readonly()" />
+      <input #linkedinInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().linkedin" name="linkedin" id="linkedin" [invalid]="linkedinInput.invalid" [fluid]="true" [disabled]="readonly()" [maxlength]="255" />
     </div>
   }
   <span class="splitter">La destination et Le Cadre</span>
@@ -60,14 +60,14 @@
   </div>
   <div class="text-field">
     <label for="city">Ville de résidence</label>
-    <input #cityInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().city" name="city" id="city" [invalid]="cityInput.invalid" [fluid]="true" required [disabled]="readonly()" />
+    <input #cityInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().city" name="city" id="city" [invalid]="cityInput.invalid" [fluid]="true" required [disabled]="readonly()" [maxlength]="255" />
     @if (cityInput.touched && cityInput.errors?.['required']) {
       <span class="error-message">Ce champ est requis.</span>
     }
   </div>
   <div class="text-field">
     <label for="hostOrganization">Nom précis de l'oganisme d'accueil (Unisité, Entreprise, Labo...)</label>
-    <input #hostOrganizationInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().hostOrganization" name="hostOrganization" id="hostOrganization" [invalid]="hostOrganizationInput.invalid" [fluid]="true" required [disabled]="readonly()" />
+    <input #hostOrganizationInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().hostOrganization" name="hostOrganization" id="hostOrganization" [invalid]="hostOrganizationInput.invalid" [fluid]="true" required [disabled]="readonly()" [maxlength]="255" />
     @if (hostOrganizationInput.touched && hostOrganizationInput.errors?.['required']) {
       <span class="error-message">Ce champ est requis.</span>
     }
@@ -97,11 +97,11 @@
       <p-radioButton name="contractStatusWhileMobility" [value]="3" [(ngModel)]="mobilityReview().contractStatusWhileMobility" inputId="contractStatusWhileMobility2" required [invalid]="contractStatusWhileMobilityInput.invalid" [disabled]="readonly()"></p-radioButton>
       <label for="contractStatusWhileMobility2">Autres</label>
     </div>
-    <input #contractStatusDetailsWhileMobilityInput="ngModel" [disabled]="mobilityReview().contractStatusWhileMobility !== 3 || readonly()" pInputText type="text" [(ngModel)]="mobilityReview().contractStatusDetailsWhileMobility" name="contractStatusDetailsWhileMobility" id="contractStatusDetailsWhileMobility" [invalid]="contractStatusDetailsWhileMobilityInput.invalid" [fluid]="true" />
+    <input #contractStatusDetailsWhileMobilityInput="ngModel" [disabled]="mobilityReview().contractStatusWhileMobility !== 3 || readonly()" pInputText type="text" [(ngModel)]="mobilityReview().contractStatusDetailsWhileMobility" name="contractStatusDetailsWhileMobility" id="contractStatusDetailsWhileMobility" [invalid]="contractStatusDetailsWhileMobilityInput.invalid" [fluid]="true" [maxlength]="255" />
   </div>
   <div class="text-field">
     <label for="mobilityPeriod">Période de mobilité (incluant d'éventuelles vacances sur place)</label>
-    <input #mobilityPeriodInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().mobilityPeriod" name="mobilityPeriod" id="mobilityPeriod" [invalid]="mobilityPeriodInput.invalid" [fluid]="true" required [disabled]="readonly()" />
+    <textarea #mobilityPeriodInput="ngModel" pTextarea type="text" [(ngModel)]="mobilityReview().mobilityPeriod" name="mobilityPeriod" id="mobilityPeriod" [invalid]="mobilityPeriodInput.invalid" [fluid]="true" required [disabled]="readonly()" [maxlength]="1000000" [autoResize]="true"></textarea>
     @if (mobilityPeriodInput.touched && mobilityPeriodInput.errors?.['required']) {
       <span class="error-message">Ce champ est requis.</span>
     }
@@ -148,24 +148,24 @@
   @if (mobilityReview().neededVisa) {
     <div class="text-field">
       <label for="visaDetails">Quel est la procédure exacte ? (Nom du Visa, documents pièges à avoir...) <span class="small">(optionnel)</span></label>
-      <input #visaDetailsInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().visaDetails" name="visaDetails" id="visaDetails" [invalid]="visaDetailsInput.invalid" [fluid]="true" [disabled]="readonly()" />
+      <textarea #visaDetailsInput="ngModel" pTextarea type="text" [(ngModel)]="mobilityReview().visaDetails" name="visaDetails" id="visaDetails" [invalid]="visaDetailsInput.invalid" [fluid]="true" [disabled]="readonly()" [maxlength]="1000000" [autoResize]="true"></textarea>
     </div>
     <div class="text-field">
       <label for="visaDelaysForAsking">Combien de temps avant le départ as-tu fais la demande ? <span class="small">(optionnel)</span></label>
-      <input #visaDelaysForAskingInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().visaDelaysForAsking" name="visaDelaysForAsking" id="visaDelaysForAsking" [invalid]="visaDelaysForAskingInput.invalid" [fluid]="true" [disabled]="readonly()" />
+      <textarea #visaDelaysForAskingInput="ngModel" pTextarea type="text" [(ngModel)]="mobilityReview().visaDelaysForAsking" name="visaDelaysForAsking" id="visaDelaysForAsking" [invalid]="visaDelaysForAskingInput.invalid" [fluid]="true" [disabled]="readonly()" [autoResize]="true"></textarea>
     </div>
     <div class="text-field">
       <label for="visaTips">Un conseil pour le Visa ? <span class="small">(optionnel)</span></label>
-      <input #visaTipsInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().visaTips" name="visaTips" id="visaTips" [invalid]="visaTipsInput.invalid" [fluid]="true" [disabled]="readonly()" />
+      <textarea #visaTipsInput="ngModel" pTextarea type="text" [(ngModel)]="mobilityReview().visaTips" name="visaTips" id="visaTips" [invalid]="visaTipsInput.invalid" [fluid]="true" [disabled]="readonly()" [maxlength]="1000000" [autoResize]="true"></textarea>
     </div>
     <div class="text-field">
       <label for="visaCost">Combien t'a-t-il coûté au total ? <span class="small">(optionnel)</span></label>
-      <input #visaCostInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().visaCost" name="visaCost" id="visaCost" [invalid]="visaCostInput.invalid" [fluid]="true" [disabled]="readonly()" />
+      <textarea #visaCostInput="ngModel" pTextarea type="text" [(ngModel)]="mobilityReview().visaCost" name="visaCost" id="visaCost" [invalid]="visaCostInput.invalid" [fluid]="true" [disabled]="readonly()" [maxlength]="1000000" [autoResize]="true"></textarea>
     </div>
   }
   <div class="text-field">
     <label for="vaccinationDetails">As-tu eu besoin de vaccins spécifiques ou d'une assurance santé particulière ? <span class="small">(optionnel)</span></label>
-    <input #vaccinationDetailsInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().vaccinationDetails" name="vaccinationDetails" id="vaccinationDetails" [invalid]="vaccinationDetailsInput.invalid" [fluid]="true" [disabled]="readonly()" />
+    <textarea #vaccinationDetailsInput="ngModel" pTextarea type="text" [(ngModel)]="mobilityReview().vaccinationDetails" name="vaccinationDetails" id="vaccinationDetails" [invalid]="vaccinationDetailsInput.invalid" [fluid]="true" [disabled]="readonly()"  [maxlength]="1000000" [autoResize]="true"></textarea>
   </div>
   <div class="radio-field">
     <span>Mode de transport principal jusqu'au pays</span>
@@ -188,7 +188,7 @@
   </div>
   <div class="text-field">
     <label for="transportationDetails">Comment t'es-tu rendu sur place (Détails sur le trajet, compagnie...) <span class="small">(optionnel)</span></label>
-    <input #transportationDetailsInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().transportationDetails" name="transportationDetails" id="transportationDetails" [invalid]="transportationDetailsInput.invalid" [fluid]="true" [disabled]="readonly()" />
+    <textarea #transportationDetailsInput="ngModel" pTextarea type="text" [(ngModel)]="mobilityReview().transportationDetails" name="transportationDetails" id="transportationDetails" [invalid]="transportationDetailsInput.invalid" [fluid]="true" [disabled]="readonly()" [maxlength]="1000000" [autoResize]="true"></textarea>
   </div>
   <span class="splitter">Le Logement</span>
   <div class="radio-field">
@@ -216,7 +216,7 @@
   </div>
   <div class="text-field">
     <label for="accommodationDetails">Comment as-tu trouvé ce(s) logement(s) ? (Sites web précis, agences...) <span class="small">(optionnel)</span></label>
-    <input #accommodationDetailsInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().accommodationDetails" name="accommodationDetails" id="accommodationDetails" [invalid]="accommodationDetailsInput.invalid" [fluid]="true" [disabled]="readonly()" />
+    <textarea #accommodationDetailsInput="ngModel" pTextarea type="text" [(ngModel)]="mobilityReview().accommodationDetails" name="accommodationDetails" id="accommodationDetails" [invalid]="accommodationDetailsInput.invalid" [fluid]="true" [disabled]="readonly()" [maxlength]="1000000" [autoResize]="true"></textarea>
   </div>
   <div class="text-field">
     <label for="accommodationCost">Quel était le montant de ton loyer mensuel ?</label>
@@ -228,21 +228,21 @@
   <span class="splitter">Le Porte-Monnaie (Budget Réel)</span>
   <div class="text-field">
     <label for="livingCost">Coût de la vie : Donne-nous quelques exemple de prix (Une bière, un ticket de bus, un repas au resto U...)</label>
-    <input #livingCostInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().livingCost" name="livingCost" id="livingCost" [invalid]="livingCostInput.invalid" [fluid]="true" required [disabled]="readonly()" />
+    <textarea #livingCostInput="ngModel" pTextarea type="text" [(ngModel)]="mobilityReview().livingCost" name="livingCost" id="livingCost" [invalid]="livingCostInput.invalid" [fluid]="true" required [disabled]="readonly()" [maxlength]="1000000" [autoResize]="true"></textarea>
     @if (livingCostInput.touched && livingCostInput.errors?.['required']) {
       <span class="error-message">Ce champ est requis.</span>
     }
   </div>
   <div class="text-field">
     <label for="financialAid">Quelles aides financières as-tu réellement touchées ? (Montants approximatifs)</label>
-    <input #financialAidInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().financialAid" name="financialAid" id="financialAid" [invalid]="financialAidInput.invalid" [fluid]="true" required [disabled]="readonly()" />
+    <textarea #financialAidInput="ngModel" pTextarea type="text" [(ngModel)]="mobilityReview().financialAid" name="financialAid" id="financialAid" [invalid]="financialAidInput.invalid" [fluid]="true" required [disabled]="readonly()" [maxlength]="1000000" [autoResize]="true"></textarea>
     @if (financialAidInput.touched && financialAidInput.errors?.['required']) {
       <span class="error-message">Ce champ est requis.</span>
     }
   </div>
   <div class="text-field">
     <label for="neededToOpenBankAccount">L'ouverture d'un compte bancaire local était-elle nécessaire ? Si oui, quelle banque choisir ?</label>
-    <input #neededToOpenBankAccountInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().neededToOpenBankAccount" name="neededToOpenBankAccount" id="neededToOpenBankAccount" [invalid]="neededToOpenBankAccountInput.invalid" [fluid]="true" required [disabled]="readonly()" />
+    <textarea #neededToOpenBankAccountInput="ngModel" pTextarea type="text" [(ngModel)]="mobilityReview().neededToOpenBankAccount" name="neededToOpenBankAccount" id="neededToOpenBankAccount" [invalid]="neededToOpenBankAccountInput.invalid" [fluid]="true" required [disabled]="readonly()" [maxlength]="1000000" [autoResize]="true"></textarea>
     @if (neededToOpenBankAccountInput.touched && neededToOpenBankAccountInput.errors?.['required']) {
       <span class="error-message">Ce champ est requis.</span>
     }
@@ -250,21 +250,21 @@
   <span class="splitter">Vie sociale, Tourisme et Intégration</span>
   <div class="text-field">
     <label for="spokenLanguage">Langue que vous avez parlée sur place</label>
-    <input #spokenLanguageInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().spokenLanguage" name="spokenLanguage" id="spokenLanguage" [invalid]="spokenLanguageInput.invalid" [fluid]="true" required [disabled]="readonly()" />
+    <input #spokenLanguageInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().spokenLanguage" name="spokenLanguage" id="spokenLanguage" [invalid]="spokenLanguageInput.invalid" [fluid]="true" required [disabled]="readonly()" [maxlength]="255" />
     @if (spokenLanguageInput.touched && spokenLanguageInput.errors?.['required']) {
       <span class="error-message">Ce champ est requis.</span>
     }
   </div>
   <div class="text-field">
     <label for="languageLevel">Quel niveau avais-tu avant de partir ? Quel niveau as-tu maintenant ?</label>
-    <input #languageLevelInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().languageLevel" name="languageLevel" id="languageLevel" [invalid]="languageLevelInput.invalid" [fluid]="true" required [disabled]="readonly()" />
+    <textarea #languageLevelInput="ngModel" pTextarea type="text" [(ngModel)]="mobilityReview().languageLevel" name="languageLevel" id="languageLevel" [invalid]="languageLevelInput.invalid" [fluid]="true" required [disabled]="readonly()" [maxlength]="1000000" [autoResize]="true"></textarea>
     @if (languageLevelInput.touched && languageLevelInput.errors?.['required']) {
       <span class="error-message">Ce champ est requis.</span>
     }
   </div>
   <div class="text-field">
     <label for="integration">Comment s'est passée l'intégration ? (Facile de rencontrer des locaux ? Beaucoup d'internationaux ? Solitude ?)</label>
-    <input #integrationInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().integration" name="integration" id="integration" [invalid]="integrationInput.invalid" [fluid]="true" required [disabled]="readonly()" />
+    <textarea #integrationInput="ngModel" pTextarea type="text" [(ngModel)]="mobilityReview().integration" name="integration" id="integration" [invalid]="integrationInput.invalid" [fluid]="true" required [disabled]="readonly()" [maxlength]="1000000" [autoResize]="true"></textarea>
     @if (integrationInput.touched && integrationInput.errors?.['required']) {
       <span class="error-message">Ce champ est requis.</span>
     }
@@ -272,28 +272,28 @@
   <span class="splitter">Le Bilan</span>
   <div class="text-field">
     <label for="prosAndConsOfTheCountry">Avantages / Inconvénients du pays</label>
-    <input #prosAndConsOfTheCountryInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().prosAndConsOfTheCountry" name="prosAndConsOfTheCountry" id="prosAndConsOfTheCountry" [invalid]="prosAndConsOfTheCountryInput.invalid" [fluid]="true" required [disabled]="readonly()" />
+    <textarea #prosAndConsOfTheCountryInput="ngModel" pTextarea type="text" [(ngModel)]="mobilityReview().prosAndConsOfTheCountry" name="prosAndConsOfTheCountry" id="prosAndConsOfTheCountry" [invalid]="prosAndConsOfTheCountryInput.invalid" [fluid]="true" required [disabled]="readonly()" [maxlength]="1000000" [autoResize]="true"></textarea>
     @if (prosAndConsOfTheCountryInput.touched && prosAndConsOfTheCountryInput.errors?.['required']) {
       <span class="error-message">Ce champ est requis.</span>
     }
   </div>
   <div class="text-field">
     <label for="tipsForTheCountry">Un conseil sur le pays ?</label>
-    <input #tipsForTheCountryInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().tipsForTheCountry" name="tipsForTheCountry" id="tipsForTheCountry" [invalid]="tipsForTheCountryInput.invalid" [fluid]="true" required [disabled]="readonly()" />
+    <textarea #tipsForTheCountryInput="ngModel" pTextarea type="text" [(ngModel)]="mobilityReview().tipsForTheCountry" name="tipsForTheCountry" id="tipsForTheCountry" [invalid]="tipsForTheCountryInput.invalid" [fluid]="true" required [disabled]="readonly()" [maxlength]="1000000" [autoResize]="true"></textarea>
     @if (tipsForTheCountryInput.touched && tipsForTheCountryInput.errors?.['required']) {
       <span class="error-message">Ce champ est requis.</span>
     }
   </div>
   <div class="text-field">
     <label for="whatWouldYouChange">Si c'était à refaire, que changerais-tu ? (Partir plus tôt, plus tard, choisir une autre coloc, économiser plus...)</label>
-    <input #whatWouldYouChangeInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().whatWouldYouChange" name="whatWouldYouChange" id="whatWouldYouChange" [invalid]="whatWouldYouChangeInput.invalid" [fluid]="true" required [disabled]="readonly()" />
+    <textarea #whatWouldYouChangeInput="ngModel" pTextarea type="text" [(ngModel)]="mobilityReview().whatWouldYouChange" name="whatWouldYouChange" id="whatWouldYouChange" [invalid]="whatWouldYouChangeInput.invalid" [fluid]="true" required [disabled]="readonly()" [maxlength]="1000000" [autoResize]="true"></textarea>
     @if (whatWouldYouChangeInput.touched && whatWouldYouChangeInput.errors?.['required']) {
       <span class="error-message">Ce champ est requis.</span>
     }
   </div>
   <div class="text-field">
     <label for="adviceForFutureMobilityStudents">Le mot de la fin / Ton meilleur souvenir</label>
-    <input #adviceForFutureMobilityStudentsInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().adviceForFutureMobilityStudents" name="adviceForFutureMobilityStudents" id="adviceForFutureMobilityStudents" [invalid]="adviceForFutureMobilityStudentsInput.invalid" [fluid]="true" required [disabled]="readonly()" />
+    <textarea #adviceForFutureMobilityStudentsInput="ngModel" pTextarea type="text" [(ngModel)]="mobilityReview().adviceForFutureMobilityStudents" name="adviceForFutureMobilityStudents" id="adviceForFutureMobilityStudents" [invalid]="adviceForFutureMobilityStudentsInput.invalid" [fluid]="true" required [disabled]="readonly()" [maxlength]="1000000" [autoResize]="true"></textarea>
     @if (adviceForFutureMobilityStudentsInput.touched && adviceForFutureMobilityStudentsInput.errors?.['required']) {
       <span class="error-message">Ce champ est requis.</span>
     }
