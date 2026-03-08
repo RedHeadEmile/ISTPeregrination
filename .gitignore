@@ -1,4 +1,6 @@
 backend/composer.phar
 backend/vendor/
 .env
+.env.prod
 .idea
+/out

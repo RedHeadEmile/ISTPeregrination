@@ -1,0 +1,19 @@
+RewriteEngine On
+RewriteBase /
+
+# 1. Rewrite /api requests to index.php
+RewriteRule ^api(.*)$ index.php [L,QSA]
+
+# 2. Rewrite empty path to /frontend/index.html
+RewriteRule ^$ /frontend/index.html [L]
+
+# 3. Check if the requested resource exists in /frontend
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{DOCUMENT_ROOT}/frontend%{REQUEST_URI} -f
+RewriteRule ^(.*)$ /frontend/$1 [L]
+
+# 4. If not found, rewrite to /frontend/index.html
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ /frontend/index.html [L]

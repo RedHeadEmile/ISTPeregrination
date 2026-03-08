@@ -1,0 +1,12 @@
+name: istperegrination
+services:
+  backend:
+    build:
+      context: ./data
+    ports:
+      - "8080:80"
+    volumes:
+      - "./data:/var/www/html"
+    env_file:
+      - ".env"
+    command: bash -c "a2enmod rewrite && apache2-foreground"

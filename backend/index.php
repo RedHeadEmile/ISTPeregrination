@@ -59,6 +59,9 @@ $dispatcher = simpleDispatcher(function (RouteCollector $r) {
 
 $httpMethod = $_SERVER['REQUEST_METHOD'];
 $uri = $_SERVER['REQUEST_URI'];
+if (isset($_ENV['base_path']) && str_starts_with($uri, $_ENV['base_path'])) {
+    $uri = substr($uri, strlen($_ENV['base_path']));
+}
 
 // Strip query string (?foo=bar) and decode URI
 if (false !== $pos = strpos($uri, '?')) {
