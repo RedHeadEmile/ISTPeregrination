@@ -88,7 +88,7 @@ export class HomePageComponent implements AfterViewInit {
         header: 'Mobilité',
         modal: true,
         draggable: false,
-        focusOnShow: true,
+        focusOnShow: false,
         closable: true,
         closeOnEscape: true,
         width: '55rem',

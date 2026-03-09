@@ -45,7 +45,7 @@ export class AdminMobilityReviewListPageComponent implements OnInit {
         header: 'Mobilité',
         modal: true,
         draggable: false,
-        focusOnShow: true,
+        focusOnShow: false,
         closable: true,
         closeOnEscape: true,
         width: '55rem',

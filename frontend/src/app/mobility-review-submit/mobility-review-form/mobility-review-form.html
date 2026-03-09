@@ -10,7 +10,7 @@
   </div>
   <div class="text-field">
     <label for="sector">Ta Promo et Filière (Ex: ICM 2026 - Génie Industriel)</label>
-    <input #sectorInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().sector" name="sector" id="sector" [invalid]="sectorInput.invalid" [fluid]="true"  [disabled]="readonly()" />
+    <input #sectorInput="ngModel" pInputText type="text" [(ngModel)]="mobilityReview().sector" name="sector" id="sector" [invalid]="sectorInput.invalid" [fluid]="true"  [disabled]="readonly()" required [maxlength]="50" />
     @if (sectorInput.touched && sectorInput.errors?.['required']) {
       <span class="error-message">Ce champ est requis.</span>
     }
