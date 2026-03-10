@@ -1,21 +1,23 @@
-import {Component, inject, model} from '@angular/core';
+import {AfterViewInit, Component, inject, model, signal} from '@angular/core';
 import {MobilityReviewModel} from '../../core/models/mobility-review.model';
 import {MobilityReviewForm} from '../../mobility-review-submit/mobility-review-form/mobility-review-form';
 import {ButtonDirective} from 'primeng/button';
 import {ApiService} from '../../core/services/api.service';
 import {DynamicDialogRef} from 'primeng/dynamicdialog';
 import {ConfirmationService} from 'primeng/api';
+import {ProgressSpinner} from 'primeng/progressspinner';
 
 @Component({
   selector: 'app-admin-mobility-review-management.component',
   imports: [
     MobilityReviewForm,
-    ButtonDirective
+    ButtonDirective,
+    ProgressSpinner
   ],
   templateUrl: './admin-mobility-review-management.component.html',
   styleUrl: './admin-mobility-review-management.component.less',
 })
-export class AdminMobilityReviewManagementComponent {
+export class AdminMobilityReviewManagementComponent implements AfterViewInit {
 
   private readonly _apiService = inject(ApiService);
   private readonly _confirmationService = inject(ConfirmationService);
@@ -23,6 +25,12 @@ export class AdminMobilityReviewManagementComponent {
   ref = inject(DynamicDialogRef);
 
   mobilityReview = model.required<MobilityReviewModel>();
+
+  loaded = signal(false);
+
+  ngAfterViewInit() {
+    setTimeout(() => this.loaded.set(true));
+  }
 
   close(): void {
     this.ref.close();

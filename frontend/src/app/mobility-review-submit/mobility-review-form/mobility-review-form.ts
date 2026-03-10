@@ -1,4 +1,4 @@
-import {Component, EventEmitter, input, model, Output} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, input, model, OnInit, output, Output} from '@angular/core';
 import {MobilityReviewModel} from '../../core/models/mobility-review.model';
 import {FormsModule} from '@angular/forms';
 import {InputText} from 'primeng/inputtext';
@@ -28,7 +28,7 @@ export class MobilityReviewForm {
   submitLabel = input<string>('Ajouter ma mobilité');
   readonly = input<boolean>(false);
 
-  @Output() onFormSubmit = new EventEmitter<void>();
+  onFormSubmit = output<void>();
 
   static countries: { name: string, code: string }[] = allCountryIDs.map(countryID => ({ name: (emojiFlags[countryID] ?? '') + ' ' + countryNames[countryID], code: countryID }));
 

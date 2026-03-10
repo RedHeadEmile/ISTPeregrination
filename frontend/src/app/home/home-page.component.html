@@ -17,5 +17,8 @@
       </ng-template>
     </p-table>
   </p-drawer>
-  <div #theWorld id="theworld"></div>
+  @if (fetching()) {
+    <p-progress-spinner />
+  }
+  <div #theWorld id="theworld" [class.off-screen]="fetching()"></div>
 </div>

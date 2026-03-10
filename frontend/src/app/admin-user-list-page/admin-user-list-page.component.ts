@@ -6,13 +6,15 @@ import {Button} from 'primeng/button';
 import {DialogService} from 'primeng/dynamicdialog';
 import {AdminUserAddComponent} from './admin-user-add/admin-user-add.component';
 import {FormsModule} from '@angular/forms';
+import {ProgressSpinner} from 'primeng/progressspinner';
 
 @Component({
   selector: 'app-admin-user-list-page',
   imports: [
     TableModule,
     Button,
-    FormsModule
+    FormsModule,
+    ProgressSpinner
   ],
   templateUrl: './admin-user-list-page.component.html',
   styleUrl: './admin-user-list-page.component.less',
@@ -22,9 +24,12 @@ export class AdminUserListPageComponent implements OnInit {
   private readonly _dialogService = inject(DialogService);
 
   users = signal<UserModel[]>([]);
+  fetching = signal(false);
 
   private async _pullUsers(): Promise<void> {
+    this.fetching.set(true);
     this.users.set(await this._apiService.getUsers());
+    this.fetching.set(false);
   }
 
   async ngOnInit(): Promise<void> {

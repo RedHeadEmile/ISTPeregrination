@@ -8,12 +8,14 @@ import {
   AdminMobilityReviewManagementComponent
 } from './admin-mobility-review-management/admin-mobility-review-management.component';
 import {App} from '../app';
+import {ProgressSpinner} from 'primeng/progressspinner';
 
 @Component({
   selector: 'app-admin-mobility-review-list',
   imports: [
     TableModule,
-    ButtonDirective
+    ButtonDirective,
+    ProgressSpinner
   ],
   templateUrl: './admin-mobility-review-list-page.component.html',
   styleUrl: './admin-mobility-review-list-page.component.less',
@@ -23,9 +25,12 @@ export class AdminMobilityReviewListPageComponent implements OnInit {
   private readonly _dialogService = inject(DialogService);
 
   mobilityReviews = signal<MobilityReviewModel[]>([]);
+  fetching = signal(false);
 
   private async _pullMobilityReviews(): Promise<void> {
+    this.fetching.set(true);
     this.mobilityReviews.set(await this._apiService.getMobilityReviews());
+    this.fetching.set(false);
   }
 
   async ngOnInit(): Promise<void> {

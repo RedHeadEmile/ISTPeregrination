@@ -8,13 +8,15 @@ import {ButtonDirective} from 'primeng/button';
 import {TableModule} from 'primeng/table';
 import {HomeMobilityReviewSeeComponent} from './home-mobility-review-see/home-mobility-review-see.component';
 import {DialogService} from 'primeng/dynamicdialog';
+import {ProgressSpinner} from 'primeng/progressspinner';
 
 @Component({
   selector: 'app-home',
   imports: [
     DrawerModule,
     ButtonDirective,
-    TableModule
+    TableModule,
+    ProgressSpinner
   ],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.less',
@@ -25,6 +27,7 @@ export class HomePageComponent implements AfterViewInit {
 
   mapContainer = viewChild<ElementRef<HTMLDivElement>>('theWorld');
 
+  fetching = signal(false);
   drawerVisible = model(false);
   drawerHeader = signal("");
   mobilityReviewsToShow = signal<MobilityReviewModel[]>([]);
@@ -33,6 +36,7 @@ export class HomePageComponent implements AfterViewInit {
   private _mobilityReviews: { [countryID: string]: MobilityReviewModel[]} = {};
 
   async ngAfterViewInit(): Promise<void> {
+    this.fetching.set(true);
     allCountryIDs.forEach(countryID => this._mobilityReviews[countryID] = []);
     (await this._apiService.getMobilityReviews()).forEach(mobilityReview =>
       this._mobilityReviews[mobilityReview.countryCode].push(mobilityReview)
@@ -77,6 +81,7 @@ export class HomePageComponent implements AfterViewInit {
         }
       });
     });
+    this.fetching.set(false);
   }
 
   see(mobilityReview: MobilityReviewModel): void {

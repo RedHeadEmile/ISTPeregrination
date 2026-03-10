@@ -1,31 +1,35 @@
 <span class="title">Gestion des mobilités</span>
 <div class="flex-column gap-4 w-100 h-100">
-  <p-table [value]="mobilityReviews()" [scrollable]="true" scrollHeight="100%" class="mh-0 h-100 table-grow">
-    <ng-template #header>
-      <tr>
-        <th>Pays</th>
-        <th>Nom</th>
-        <th>Prénom</th>
-        <th>Promo</th>
-        <th>État</th>
-        <th style="width: 5rem"></th>
-      </tr>
-    </ng-template>
-    <ng-template #body let-mr>
-      <tr>
-        <td>{{ getCountryName(mr.countryCode) }}</td>
-        <td>{{ mr.lastname }}</td>
-        <td>{{ mr.firstname }}</td>
-        <td>{{ mr.sector }}</td>
-        <td>
-          @if (mr.reviewed) {
-            Acceptée
-          } @else {
-            En attente
-          }
-        </td>
-        <td><button pButton [size]="'small'" type="button" (click)="see(mr)">Voir</button></td>
-      </tr>
-    </ng-template>
-  </p-table>
+  @if (fetching()) {
+    <p-progress-spinner />
+  } @else {
+    <p-table [value]="mobilityReviews()" [scrollable]="true" scrollHeight="100%" class="mh-0 h-100 table-grow">
+      <ng-template #header>
+        <tr>
+          <th>Pays</th>
+          <th>Nom</th>
+          <th>Prénom</th>
+          <th>Promo</th>
+          <th>État</th>
+          <th style="width: 5rem"></th>
+        </tr>
+      </ng-template>
+      <ng-template #body let-mr>
+        <tr>
+          <td>{{ getCountryName(mr.countryCode) }}</td>
+          <td>{{ mr.lastname }}</td>
+          <td>{{ mr.firstname }}</td>
+          <td>{{ mr.sector }}</td>
+          <td>
+            @if (mr.reviewed) {
+              Acceptée
+            } @else {
+              En attente
+            }
+          </td>
+          <td><button pButton [size]="'small'" type="button" (click)="see(mr)">Voir</button></td>
+        </tr>
+      </ng-template>
+    </p-table>
+  }
 </div>

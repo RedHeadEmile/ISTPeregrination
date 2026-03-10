@@ -1,4 +1,8 @@
-<app-mobility-review-form [readonly]="true" [mobilityReview]="mobilityReview()" />
+@if (loaded()) {
+  <app-mobility-review-form [readonly]="true" [mobilityReview]="mobilityReview()" />
+} @else {
+  <p-progress-spinner />
+}
 <div class="flex-row gap-4">
   <button pButton type="button" (click)="close()" [fluid]="true">Retour à la liste</button>
 </div>
