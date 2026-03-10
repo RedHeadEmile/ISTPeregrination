@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, inject} from '@angular/core';
+import {Component, inject, model, signal} from '@angular/core';
 import {MobilityReviewForm} from './mobility-review-form/mobility-review-form';
 import {MobilityReviewModel} from '../core/models/mobility-review.model';
 import {ApiService} from '../core/services/api.service';
@@ -17,14 +17,12 @@ import {RouterLink} from '@angular/router';
 })
 export class MobilityReviewSubmitPageComponent {
   private readonly _apiService = inject(ApiService);
-  private readonly _changeDetectorRef = inject(ChangeDetectorRef);
 
-  showThankYou: boolean = false;
-  mobilityReview: Partial<MobilityReviewModel> = {};
+  showThankYou = signal(false);
+  mobilityReview = model<Partial<MobilityReviewModel>>({});
 
   async submitMobilityReview(): Promise<void> {
-    await this._apiService.submitMobilityReview(this.mobilityReview as MobilityReviewModel);
-    this.showThankYou = true;
-    this._changeDetectorRef.detectChanges();
+    await this._apiService.submitMobilityReview(this.mobilityReview() as MobilityReviewModel);
+    this.showThankYou.set(true);
   }
 }

@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, inject} from '@angular/core';
+import {Component, inject, model, signal} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {InputText} from 'primeng/inputtext';
 import {Password} from 'primeng/password';
@@ -24,31 +24,28 @@ export class UserLoginPageComponent {
   private readonly _apiService = inject(ApiService);
   private readonly _authenticationService = inject(AuthenticationService);
   private readonly _router = inject(Router);
-  private readonly _cdr = inject(ChangeDetectorRef);
 
-  email: string = '';
-  password: string = '';
-  errorMessage?: string;
+  email = model('');
+  password = model('');
+  errorMessage = model<string | undefined>(undefined);
 
-  loading: boolean = false;
-  emailSent: boolean = false;
+  loading = signal(false);
+  emailSent = signal(false);
 
   async login(): Promise<void> {
-    this.loading = true;
-    await this._authenticationService.login(this.email, this.password);
+    this.loading.set(true);
+    await this._authenticationService.login(this.email(), this.password());
     if (!!this._authenticationService.getCurrentUser()) {
       await this._router.navigate(['/admin']);
     }
     else {
-      this.errorMessage = 'Adresse email ou mot de passe incorrect';
+      this.errorMessage.set('Adresse email ou mot de passe incorrect');
     }
-    this.loading = false;
-    this._cdr.detectChanges();
+    this.loading.set(false);
   }
 
   async sendResetEmail(): Promise<void> {
-    this.emailSent = true;
-    this._cdr.detectChanges();
-    await this._apiService.sendResetPassword(this.email);
+    this.emailSent.set(true);
+    await this._apiService.sendResetPassword(this.email());
   }
 }

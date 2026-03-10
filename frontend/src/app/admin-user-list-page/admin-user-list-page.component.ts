@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, inject, OnInit} from '@angular/core';
+import {Component, inject, OnInit, signal} from '@angular/core';
 import {ApiService} from '../core/services/api.service';
 import {UserModel} from '../core/models/user.model';
 import {TableModule} from 'primeng/table';
@@ -19,14 +19,12 @@ import {FormsModule} from '@angular/forms';
 })
 export class AdminUserListPageComponent implements OnInit {
   private readonly _apiService = inject(ApiService);
-  private readonly _changeDetectorRef = inject(ChangeDetectorRef);
   private readonly _dialogService = inject(DialogService);
 
-  users: UserModel[] = [];
+  users = signal<UserModel[]>([]);
 
   private async _pullUsers(): Promise<void> {
-    this.users = await this._apiService.getUsers();
-    this._changeDetectorRef.detectChanges();
+    this.users.set(await this._apiService.getUsers());
   }
 
   async ngOnInit(): Promise<void> {

@@ -1,6 +1,6 @@
 <div class="container">
-  <p-drawer [(visible)]="drawerVisible" [header]="drawerHeader" styleClass="mobility-drawer">
-    <p-table [value]="mobilityReviewsToShow" [scrollable]="true" scrollHeight="100%" class="mh-0 h-100 table-grow">
+  <p-drawer [(visible)]="drawerVisible" [header]="drawerHeader()" styleClass="mobility-drawer">
+    <p-table [value]="mobilityReviewsToShow()" [scrollable]="true" scrollHeight="100%" class="mh-0 h-100 table-grow">
       <ng-template #header>
         <tr>
           <th>Promo</th>

@@ -9,10 +9,10 @@
     <p-password #passwordInput="ngModel" [(ngModel)]="password" name="password" required id="password" [feedback]="false" [toggleMask]="true" [invalid]="passwordInput.invalid" [minlength]="8" [fluid]="true"></p-password>
   </div>
   <div class="flex-row">
-    <button [disabled]="form.invalid || loading" pButton type="submit" [fluid]="true">Connexion</button>
+    <button [disabled]="form.invalid || loading()" pButton type="submit" [fluid]="true">Connexion</button>
   </div>
-  @if (!!errorMessage) {
-    <span class="error-message">{{ errorMessage }}</span>
-    <p-button [type]="'button'" outlined (click)="sendResetEmail()" [disabled]="emailSent">Envoyer un lien pour réinitialiser le mot de passe à {{ email }}</p-button>
+  @if (!!errorMessage()) {
+    <span class="error-message">{{ errorMessage() }}</span>
+    <p-button [type]="'button'" outlined (click)="sendResetEmail()" [disabled]="emailSent()">Envoyer un lien pour réinitialiser le mot de passe à {{ email() }}</p-button>
   }
 </form>

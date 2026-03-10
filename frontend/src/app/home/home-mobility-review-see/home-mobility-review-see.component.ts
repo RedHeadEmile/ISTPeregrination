@@ -1,4 +1,4 @@
-import {Component, inject, model} from '@angular/core';
+import {Component, inject, input} from '@angular/core';
 import {ButtonDirective} from "primeng/button";
 import {MobilityReviewForm} from "../../mobility-review-submit/mobility-review-form/mobility-review-form";
 import {DynamicDialogRef} from 'primeng/dynamicdialog';
@@ -17,7 +17,7 @@ export class HomeMobilityReviewSeeComponent {
 
   ref = inject(DynamicDialogRef);
 
-  mobilityReview = model.required<MobilityReviewModel>();
+  mobilityReview = input.required<MobilityReviewModel>();
 
   close(): void {
     this.ref.close();

@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, inject, OnInit} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {Router, RouterLink, RouterOutlet} from '@angular/router';
 import {Toast} from 'primeng/toast';
 import {Menu} from 'primeng/menu';
@@ -24,7 +24,6 @@ export const emojiFlags: { [countryId: string]: string } = {
 })
 export class App implements OnInit {
   private readonly _authenticationService = inject(AuthenticationService);
-  private readonly _changeDetectorRef = inject(ChangeDetectorRef);
   private readonly _router = inject(Router);
 
   static countryNames: Record<string, string> = {};
@@ -51,7 +50,6 @@ export class App implements OnInit {
       command: async () => {
         await this._authenticationService.logout();
         await this._router.navigate(['/']);
-        this._changeDetectorRef.detectChanges();
       }
     }
   ];
@@ -59,7 +57,6 @@ export class App implements OnInit {
   async ngOnInit(): Promise<void> {
     if (!this._authenticationService.isCurrentUserInitialized())
       await this._authenticationService.pullCurrentUser();
-    this._changeDetectorRef.detectChanges();
   }
 
   get isAuthenticated(): boolean {

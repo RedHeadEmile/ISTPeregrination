@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostListener, inject, viewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, HostListener, inject, model, signal, viewChild} from '@angular/core';
 import svgMap from 'svgmap';
 import {ApiService} from '../core/services/api.service';
 import {MobilityReviewModel} from '../core/models/mobility-review.model';
@@ -22,13 +22,12 @@ import {DialogService} from 'primeng/dynamicdialog';
 export class HomePageComponent implements AfterViewInit {
   private readonly _apiService = inject(ApiService);
   private readonly _dialogService = inject(DialogService);
-  private readonly _cdr = inject(ChangeDetectorRef);
 
   mapContainer = viewChild<ElementRef<HTMLDivElement>>('theWorld');
 
-  drawerVisible: boolean = false;
-  drawerHeader: string = "";
-  mobilityReviewsToShow: MobilityReviewModel[] = [];
+  drawerVisible = model(false);
+  drawerHeader = signal("");
+  mobilityReviewsToShow = signal<MobilityReviewModel[]>([]);
 
   private _map?: svgMap;
   private _mobilityReviews: { [countryID: string]: MobilityReviewModel[]} = {};
@@ -71,11 +70,10 @@ export class HomePageComponent implements AfterViewInit {
 
     allCountryIDs.forEach(countryId => {
       document.getElementById(targetElementId + '-map-country-' + countryId)?.addEventListener('pointerdown', () => {
-        this.mobilityReviewsToShow = this._mobilityReviews[countryId];
-        if (this.mobilityReviewsToShow.length > 0) {
-          this.drawerHeader = App.countryNames[countryId] ?? countryId;
-          this.drawerVisible = true;
-          this._cdr.detectChanges();
+        this.mobilityReviewsToShow.set(this._mobilityReviews[countryId]);
+        if (this.mobilityReviewsToShow().length > 0) {
+          this.drawerHeader.set(App.countryNames[countryId] ?? countryId);
+          this.drawerVisible.set(true);
         }
       });
     });

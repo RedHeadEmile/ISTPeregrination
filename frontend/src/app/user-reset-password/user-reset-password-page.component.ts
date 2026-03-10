@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, inject, OnInit} from '@angular/core';
+import {Component, inject, model, OnInit, signal} from '@angular/core';
 import {ButtonDirective} from 'primeng/button';
 import {FormsModule} from '@angular/forms';
 import {Password} from 'primeng/password';
@@ -18,52 +18,47 @@ import {ActivatedRoute, Router} from '@angular/router';
 export class UserResetPasswordPageComponent implements OnInit {
   private readonly _apiService = inject(ApiService);
   private readonly _activatedRoute = inject(ActivatedRoute);
-  private readonly _cdr = inject(ChangeDetectorRef);
   private readonly _router = inject(Router);
 
-  loading: boolean = false;
-  invalidLink: boolean = false;
+  loading = signal(false);
+  invalidLink = signal(false);
 
-  token: string = '';
-  password: string = '';
-  confirmPassword: string = '';
-  errorMessage?: string;
+  token = model('');
+  password = model('');
+  confirmPassword = model('');
+  errorMessage = signal<string | undefined>(undefined);
 
   async ngOnInit(): Promise<void> {
-    this.token = this._activatedRoute.snapshot.params['token'] || this._activatedRoute.snapshot.queryParams['token'] || '';
-    if (!this.token || !(await this._apiService.isResetPasswordTokenValid(this.token))) {
-      this.invalidLink = true;
-      this._cdr.detectChanges();
+    this.token.set(this._activatedRoute.snapshot.params['token'] || this._activatedRoute.snapshot.queryParams['token'] || '');
+    if (!this.token() || !(await this._apiService.isResetPasswordTokenValid(this.token()))) {
+      this.invalidLink.set(true);
       return;
     }
   }
 
   async resetPassword(): Promise<void> {
-    if (this.password !== this.confirmPassword) {
-      this.errorMessage = 'Les mots de passe ne correspondent pas';
-      this._cdr.detectChanges();
+    if (this.password() !== this.confirmPassword()) {
+      this.errorMessage.set('Les mots de passe ne correspondent pas');
       return;
     }
 
-    this.loading = true;
-    this._cdr.detectChanges();
+    this.loading.set(true);
     try {
-      await this._apiService.resetPassword(this.token, this.password);
+      await this._apiService.resetPassword(this.token(), this.password());
       await this._router.navigate(['/login']);
     }
     catch (error) {
       if (error instanceof ApiError && error.isApiError) {
         switch (error.error) {
           case "invalid_token":
-            this.invalidLink = true;
+            this.invalidLink.set(true);
             break;
 
           case "password_too_weak":
-            this.errorMessage = "Mot de passe trop faible !";
+            this.errorMessage.set("Mot de passe trop faible !");
             break;
         }
-        this.loading = false;
-        this._cdr.detectChanges();
+        this.loading.set(false);
       }
       else
         throw error;

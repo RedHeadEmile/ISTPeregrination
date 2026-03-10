@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, inject} from '@angular/core';
+import {Component, inject, model, signal} from '@angular/core';
 import {ButtonDirective} from 'primeng/button';
 import {FormsModule} from '@angular/forms';
 import {InputText} from 'primeng/inputtext';
@@ -20,45 +20,43 @@ import {DynamicDialogRef} from 'primeng/dynamicdialog';
 export class AdminUserAddComponent {
 
   private readonly _apiService = inject(ApiService);
-  private readonly _changeDetectorRef = inject(ChangeDetectorRef);
 
   ref = inject(DynamicDialogRef);
 
-  firstname: string = '';
-  lastname: string = '';
-  email: string = '';
-  password: string = '';
+  firstname = model('');
+  lastname = model('');
+  email = model('');
+  password = model('');
 
-  loading: boolean = false;
-  errorMessage?: string;
+  loading = signal(false);
+  errorMessage = signal<string | undefined>(undefined);
 
   async addUser(): Promise<void> {
-    this.loading = true;
+    this.loading.set(true);
     try {
-      await this._apiService.createUser(this.email, this.password, this.firstname, this.lastname);
+      await this._apiService.createUser(this.email(), this.password(), this.firstname(), this.lastname());
       this.ref.close(true);
     }
     catch (error) {
       if (error instanceof ApiError && error.isApiError) {
         switch (error.error) {
           case "email_already_exists":
-            this.errorMessage = "Cette adresse email est déjà utilisée !";
+            this.errorMessage.set("Cette adresse email est déjà utilisée !");
             break;
 
           case "invalid_email":
-            this.errorMessage = "Cette adresse email n'est pas valide !";
+            this.errorMessage.set("Cette adresse email n'est pas valide !");
             break;
 
           case "invalid_name":
-            this.errorMessage = "Nom/Prénom invalide !";
+            this.errorMessage.set("Nom/Prénom invalide !");
             break;
 
           case "password_too_weak":
-            this.errorMessage = "Mot de passe trop faible !";
+            this.errorMessage.set("Mot de passe trop faible !");
             break;
         }
-        this.loading = false;
-        this._changeDetectorRef.detectChanges();
+        this.loading.set(false);
       }
       else
         throw error;

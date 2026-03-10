@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, inject, OnInit} from '@angular/core';
+import {Component, inject, OnInit, signal} from '@angular/core';
 import {ButtonDirective} from "primeng/button";
 import {TableModule} from "primeng/table";
 import {ApiService} from '../core/services/api.service';
@@ -20,14 +20,12 @@ import {App} from '../app';
 })
 export class AdminMobilityReviewListPageComponent implements OnInit {
   private readonly _apiService = inject(ApiService);
-  private readonly _changeDetectorRef = inject(ChangeDetectorRef);
   private readonly _dialogService = inject(DialogService);
 
-  mobilityReviews: MobilityReviewModel[] = [];
+  mobilityReviews = signal<MobilityReviewModel[]>([]);
 
   private async _pullMobilityReviews(): Promise<void> {
-    this.mobilityReviews = await this._apiService.getMobilityReviews();
-    this._changeDetectorRef.detectChanges();
+    this.mobilityReviews.set(await this._apiService.getMobilityReviews());
   }
 
   async ngOnInit(): Promise<void> {
