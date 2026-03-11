@@ -18,7 +18,7 @@ class MobilityReviewsIndexController extends AbstractController
         $anonymous = $this->getCurrentUser() === null;
         $mobilityReviews = MobilityReviewService::getInstance()->getAllMobilityReviews($anonymous);
 
-        if (!$anonymous) {
+        if ($anonymous) {
             foreach ($mobilityReviews as $review) {
                 if (!$review->allowContacts) {
                     $review->firstname = null;
